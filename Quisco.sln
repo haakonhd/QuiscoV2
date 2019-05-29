@@ -7,11 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quisco.App", "Quisco\Quisco
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quisco.Core", "Quisco.Core\Quisco.Core.csproj", "{EB81CB02-32B9-4B25-BE22-8195A2C0D0AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quisco.Model", "Quisco.Model\Quisco.Model.csproj", "{35D9D017-DFE7-4229-9292-12733B147DB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quisco.Model", "Quisco.Model\Quisco.Model.csproj", "{35D9D017-DFE7-4229-9292-12733B147DB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quisco.DataAccess", "Quisco.DataAccess\Quisco.DataAccess.csproj", "{CC988DBF-2A76-46F1-9E96-AFE02592E080}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quisco.DataAccess", "Quisco.DataAccess\Quisco.DataAccess.csproj", "{CC988DBF-2A76-46F1-9E96-AFE02592E080}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quisco.Api", "Quisco.Api\Quisco.Api.csproj", "{491750D6-B2F2-4917-A02A-E2B9676F6D5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quisco.Api", "Quisco.Api\Quisco.Api.csproj", "{491750D6-B2F2-4917-A02A-E2B9676F6D5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

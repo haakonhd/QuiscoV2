@@ -8,7 +8,7 @@ namespace Quisco.DataAccess
 {
     public class AnswerRequest
     {
-        private static readonly Uri answersBaseUri = new Uri("http://localhost:55418/api/AnswersList");
+        private static readonly Uri answersBaseUri = new Uri("http://localhost:55418/api/Answers");
         private readonly HttpClient httpClient = new HttpClient();
 
         public async Task<Answer[]> GetAnswerList()

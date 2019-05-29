@@ -8,7 +8,7 @@ namespace Quisco.DataAccess
 {
     public class QuestionRequest
     {
-        static Uri questionsBaseUri = new Uri("http://localhost:55418/api/QuestionList");
+        static Uri questionsBaseUri = new Uri("http://localhost:55418/api/Questions");
         HttpClient httpClient = new HttpClient();
 
         public async Task<Question[]> GetQuestionListByQuizId(int id)

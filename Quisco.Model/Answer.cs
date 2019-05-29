@@ -34,5 +34,10 @@
 		}
 
 		public Answer() { }
+
+		public override string ToString()
+		{
+			return this.AnswerText;
+		}
 	}
 }

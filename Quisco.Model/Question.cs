@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Quisco.Model
 {
-	[Table("QuestionList")]
+	[Table("Questions")]
 	public class Question
 	{
 		[Key]
@@ -19,7 +19,6 @@ namespace Quisco.Model
 		public int BelongingQuizId { get; set; }
 		[NotMapped]
 		public IList<Answer> AnswersList { get; set; } = new List<Answer>();
-		[Column("AnswersList")]
 		public ICollection<Answer> Answers { get; set; } = new List<Answer>();
 
 		public Question() { }

@@ -41,6 +41,7 @@ namespace Quisco.ViewModels
             this.quizParams = quizParams;
             this.quiz = quizParams.Quiz;
             this.questionToHandle = quizParams.QuestionToHandle;
+
             question = quiz.QuestionList.ElementAtOrDefault(questionToHandle - 1);
             BuildViews();
         }
@@ -59,6 +60,7 @@ namespace Quisco.ViewModels
                 bool userConfirmed = await DisplayAreYouSureDialog().ConfigureAwait(true);
                 if (userConfirmed)
                 {
+                    quiz.QuizName = QuizNameHeader;
                     //updating quiz and question's ICollections and deleting their ILists.
                     quiz.Questions.Clear();
                     foreach (Question q in quiz.QuestionList) quiz.Questions.Add(q);
@@ -84,6 +86,16 @@ namespace Quisco.ViewModels
             }
         }
 
+
+        public void GoBack(object sender, RoutedEventArgs e)
+        {
+            if (IdentityService.IsLoggedIn())
+                NavigationService.Navigate(typeof(UserPage));
+            else
+            {
+                NavigationService.Navigate(typeof(MainPage));
+            }
+        }
 
         //One way bindings:
 
@@ -222,17 +234,15 @@ namespace Quisco.ViewModels
             QuestionInputText = "";
             question = quiz.QuestionList.ElementAtOrDefault(questionToHandle - 1);
 
-            // question to be handled has already been created
+            // question to be handled has already been created (editing)
             if (question != null)
             {
                 QuestionInputText = question.QuestionText;
 
                 Answer1InputText.Text = question.AnswersList.ElementAtOrDefault(0)?.AnswerText;
                 Answer2InputText.Text = question.AnswersList.ElementAtOrDefault(1)?.AnswerText;
-                if (Answer3InputText.Text.Length > 0)
-                    Answer3InputText.Text = question.AnswersList.ElementAtOrDefault(2)?.AnswerText;
-                if (Answer4InputText.Text.Length > 0)
-                    Answer4InputText.Text = question.AnswersList.ElementAtOrDefault(3)?.AnswerText;
+                Answer3InputText.Text = question.AnswersList.ElementAtOrDefault(2)?.AnswerText;
+                Answer4InputText.Text = question.AnswersList.ElementAtOrDefault(3)?.AnswerText;
 
                 OnAnswer1Changed(null,null);
                 SetCorrectAnswer();
@@ -251,16 +261,6 @@ namespace Quisco.ViewModels
         }
 
 
-
-        public void GoBack(object sender, RoutedEventArgs e)
-        {
-            if(IdentityService.IsLoggedIn())
-                NavigationService.Navigate(typeof(UserPage));
-            else
-            {
-                NavigationService.Navigate(typeof(MainPage));
-            }
-        }
 
         public void RadioButtonChecked(object sender, RoutedEventArgs e)
         {
@@ -315,7 +315,8 @@ namespace Quisco.ViewModels
             if (newQuestion) quiz.QuestionList.Add(question);
             else quiz.QuestionList[questionToHandle - 1] = question;
 
-            quizParams.QuestionToHandle++;
+            quizParams.QuestionToHandle = quiz.QuestionList.Count + 1;
+            quiz.QuizName = QuizNameHeader;
             Initialize(quizParams);
         }
 
@@ -343,7 +344,8 @@ namespace Quisco.ViewModels
         {
             if (Answer1InputText.Text.Length < 1) return false;
             if (Answer2InputText.Text.Length < 1) return false;
-            if (Answer4InputText.Text.Length > 0 && Answer3InputText.Text.Length < 1) return false;
+            //asnswer 4 is filled  but not 3 (should not be possible)
+            if (!string.IsNullOrEmpty(Answer4InputText.Text) && string.IsNullOrEmpty(Answer3InputText.Text)) return false;
             return true;
         }
 
@@ -387,13 +389,13 @@ namespace Quisco.ViewModels
             Answer4BorderBrush = default(SolidColorBrush);
 
 
-            if (Answer1InputText.Text.Length > 0)
+            if (!string.IsNullOrEmpty(Answer1InputText.Text))
                 Answer1BorderBrush = new SolidColorBrush(Colors.Red);
-            if(Answer2InputText.Text.Length > 0)
+            if(!string.IsNullOrEmpty(Answer2InputText.Text))
                 Answer2BorderBrush = new SolidColorBrush(Colors.Red);
-            if(Answer3InputText.Text.Length > 0)
+            if(!string.IsNullOrEmpty(Answer3InputText.Text))
                 Answer3BorderBrush = new SolidColorBrush(Colors.Red);
-            if(Answer4InputText.Text.Length > 0)
+            if(!string.IsNullOrEmpty(Answer4InputText.Text))
                 Answer4BorderBrush = new SolidColorBrush(Colors.Red);
 
             int selectedRadioButton = GetSelectedAnswer();
@@ -420,14 +422,16 @@ namespace Quisco.ViewModels
             Answer2InputText.Text = "";
             Answer3InputText.Text = "";
             Answer4InputText.Text = "";
+
             Answer1InputText.IsEnabled = true;
+            RadioButton1.IsEnabled = false;
             OnAnswer1Changed(null, null);
         }
 
         public void OnAnswer1Changed(object sender, TextChangedEventArgs e)
         {
             // ANSWER 1
-            if (Answer1InputText.Text.Length > 0)
+            if (!string.IsNullOrEmpty(Answer1InputText.Text))
             {
                 Answer2InputText.IsEnabled = true;
                 RadioButton1.IsEnabled = true;
@@ -443,7 +447,7 @@ namespace Quisco.ViewModels
         public void OnAnswer2Changed(object sender, TextChangedEventArgs e)
         {
             // ANSWER 2
-            if (Answer2InputText.Text.Length > 0 && Answer2InputText.IsEnabled)
+            if (!string.IsNullOrEmpty(Answer2InputText.Text) && Answer2InputText.IsEnabled)
             {
                 Answer3InputText.IsEnabled = true;
                 RadioButton2.IsEnabled = true;
@@ -460,7 +464,7 @@ namespace Quisco.ViewModels
         public void OnAnswer3Changed(object sender, TextChangedEventArgs e)
         {
             // ANSWER 3
-            if (Answer3InputText.Text.Length > 0 && Answer3InputText.IsEnabled)
+            if (!string.IsNullOrEmpty(Answer3InputText.Text) && Answer3InputText.IsEnabled)
             {
                 Answer4InputText.IsEnabled = true;
                 RadioButton3.IsEnabled = true;
@@ -477,7 +481,7 @@ namespace Quisco.ViewModels
         public void OnAnswer4Changed(object sender, TextChangedEventArgs e)
         {
             // ANSWER 4
-            if (Answer4InputText.Text.Length > 0 && Answer4InputText.IsEnabled)
+            if (!string.IsNullOrEmpty(Answer4InputText.Text) && Answer4InputText.IsEnabled)
             {
                 RadioButton4.IsEnabled = true;
             }

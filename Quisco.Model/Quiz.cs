@@ -14,10 +14,9 @@ namespace Quisco.Model
 		public string QuizName { get; set; }
 		public string QuizCategory { get; set; }
 		public string UserIdHash { get; set; }
+		public ICollection<Question> Questions { get; set; } = new List<Question>();
 		[NotMapped]
 		public IList<Question> QuestionList { get; set; } = new List<Question>();
-		[Column("Questions")]
-		public ICollection<Question> Questions { get; set; } = new List<Question>();
 
 
 		public Quiz() { }

@@ -2,7 +2,7 @@
 
 namespace Quisco.DataAccess.Migrations
 {
-    public partial class tull : Migration
+    public partial class initial3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
