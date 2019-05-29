@@ -1,0 +1,54 @@
+﻿<Page
+    x:Class="Quisco.Views.Create.CreateQuizName"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Style="{StaticResource PageStyle}"
+    mc:Ignorable="d">
+    <Grid
+
+        Style="{StaticResource ImageStyle}"
+        x:Name="ContentArea">
+        <Grid
+            HorizontalAlignment="Stretch"
+            Margin="60,200,60,60"
+            VerticalAlignment="Stretch"
+            Background="LightGray"
+            Opacity="0.3"
+            />
+        <RelativePanel x:Name="MainRelativePanel"  Margin="80,200,60,60">
+
+            <TextBlock  x:Name="CreateQuizHeader"
+                FontFamily="{StaticResource DefaultFont}" FontSize="40" FontWeight="Bold"
+                Margin="0,20,0,0" Text="Create Quiz" TextWrapping="Wrap" RelativePanel.AlignTopWithPanel="True"/>
+            <TextBlock x:Name="EnterQuizNameTextBlock"
+                RelativePanel.Below="CreateQuizHeader"
+                FontFamily="{StaticResource DefaultFont}" FontSize="20" FontWeight="Bold"
+                Margin="20,30,0,0" Text="Enter quiz name:" TextWrapping="Wrap"/>
+            <TextBox x:Name="CreateQuizNameInput"
+                Text="{x:Bind ViewModel.QuestionInputText, Mode=TwoWay}" RelativePanel.Below="EnterQuizNameTextBlock"
+                Margin="20,20,0,0" PlaceholderText="Quiz name"  Padding="9,9,9,9" Width="500"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,30,30" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+                <Button Click="{x:Bind ViewModel.ClickedBack}" Height="40" Width="80" VerticalAlignment="Bottom" Padding="0" BorderThickness="0" Margin="20,0,0,0">
+                    <Grid>
+                        <Image Source="../../Assets/button_grey_bg.png" Stretch="UniformToFill"/>
+                        <TextBlock
+                            Text="Back" FontFamily="{StaticResource DefaultFont}" FontWeight="Bold" FontSize="17"
+                            Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                    </Grid>
+                </Button>
+                <Button Click="{x:Bind ViewModel.ClickedNext}"
+                    Height="40" Width="120" VerticalAlignment="Bottom" Padding="0" BorderThickness="0" Margin="20,0,0,0">
+                    <Grid>
+                        <Image Source="../../Assets/button_green_bg.png" Stretch="UniformToFill"/>
+                        <TextBlock
+                                Text="Next" FontFamily="{StaticResource DefaultFont}" FontWeight="Bold" FontSize="17"
+                                Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    </Grid>
+                </Button>
+            </StackPanel>
+        </RelativePanel>
+    </Grid>
+</Page>

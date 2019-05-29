@@ -1,0 +1,143 @@
+﻿<Page
+    x:Class="Quisco.Views.EditQuiz"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Quisco.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Style="{StaticResource PageStyle}"
+    mc:Ignorable="d">
+
+    <Grid
+        Style="{StaticResource ImageStyle}"
+        x:Name="ContentArea">
+        <!-- grey background -->
+        <Grid
+            HorizontalAlignment="Stretch"
+            Margin="60,200,60,60"
+            VerticalAlignment="Stretch"
+            Background="LightGray"
+            Opacity="0.3"
+        >
+        </Grid>
+
+        <Grid
+            HorizontalAlignment="Stretch"
+            Margin="60,200,60,60"
+            VerticalAlignment="Stretch">
+            <RelativePanel x:Name="LeftHalfRelativePanel" Margin="40,0,0,0" Width="600" HorizontalAlignment="Left">
+                <TextBox
+                    x:Name="QuizNameHeader"
+                    Text="{x:Bind ViewModel.QuizNameHeader, Mode=TwoWay}" Margin="0,20,0,0"  TextWrapping="Wrap"
+                    FontFamily="{StaticResource DefaultFont}" FontSize="30" FontWeight="Bold" Height="Auto" MaxHeight="80"
+                    RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"/>
+
+                <TextBlock x:Name="QuestionNumberTextBlock"
+                   Text="{x:Bind ViewModel.QuestionNumberText, Mode=OneWay}" RelativePanel.Below="QuizNameHeader" Margin="0,30,0,0"
+                   FontFamily="{StaticResource DefaultFont}" FontWeight="Bold" FontSize="20" TextWrapping="WrapWholeWords" Height="Auto" />
+                <TextBox x:Name="QuestionTextInput"
+                         Text="{x:Bind ViewModel.QuestionInputText, Mode=TwoWay}" RelativePanel.Below="QuestionNumberTextBlock"
+                         Margin="0,20,0,0" PlaceholderText="Enter question here"  Padding="9,9,9,9" Height="80"
+                         RelativePanel.AlignLeftWithPanel="true" RelativePanel.AlignRightWithPanel="True" TextWrapping="Wrap"/>
+                <Grid x:Name="AnswerGrid" RelativePanel.Below="QuestionTextInput" Margin="0,20,0,0"
+                      RelativePanel.AlignLeftWithPanel="true" RelativePanel.AlignRightWithPanel="True" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="65"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Answer 1 -->
+                    <RadioButton x:Name="RadioButton1"
+                            IsChecked="{Binding Path=RadioButton1.IsChecked, Mode=TwoWay}"
+                            IsEnabled="{Binding Path=RadioButton1.IsEnabled, Mode=TwoWay}" 
+                            Checked="{x:Bind ViewModel.RadioButtonChecked}" Grid.Row="0" Grid.Column="0"  Tag="Answer 1"  />
+                    <TextBox x:Name="Answer1Input" 
+                            IsEnabled="{Binding Path=Answer1InputText.IsEnabled,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Text="{Binding Path=Answer1InputText.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                            Grid.Row="0" Grid.Column="1" PlaceholderText="Answer 1"  Padding="9,9,9,9" Height="45" Margin="0,0,10,0"
+                            BorderThickness="2.5"  BorderBrush="{Binding Path=Answer1BorderBrush, UpdateSourceTrigger=PropertyChanged}" TextChanged="{x:Bind ViewModel.OnAnswer1Changed}" />
+
+                    <!-- Answer 2 -->
+                    <RadioButton x:Name="RadioButton2"
+                            IsChecked="{Binding Path=RadioButton2.IsChecked, Mode=TwoWay}"
+                            IsEnabled="{Binding Path=RadioButton2.IsEnabled, Mode=TwoWay}"  
+                            Checked="{x:Bind ViewModel.RadioButtonChecked}" Grid.Row="0" Grid.Column="2"  Tag="Answer 2"/>
+                    <TextBox x:Name="Answer2Input"
+                             Text="{Binding Path=Answer2InputText.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             IsEnabled="{Binding Path=Answer2InputText.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                             BorderThickness="2.5" BorderBrush="{Binding Path=Answer2BorderBrush, UpdateSourceTrigger=PropertyChanged}" TextChanged="{x:Bind ViewModel.OnAnswer2Changed}"
+                             Grid.Row="0" Grid.Column="3" Margin="0,0,0,0" PlaceholderText="Answer 2" Padding="9,9,9,9" Height="45" />
+
+                    <!-- Answer 3 -->
+                    <RadioButton x:Name="RadioButton3"
+                             IsChecked="{Binding Path=RadioButton3.IsChecked, Mode=TwoWay}"
+                             IsEnabled="{Binding Path=RadioButton3.IsEnabled, Mode=TwoWay}"
+                             Checked="{x:Bind ViewModel.RadioButtonChecked}" Grid.Row="1" Grid.Column="0" Tag="Answer 3"/>
+                    <TextBox x:Name="Answer3Input"
+                             Text="{Binding Path=Answer3InputText.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             IsEnabled="{Binding Path=Answer3InputText.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,0"
+                             BorderThickness="2.5" BorderBrush="{Binding Path=Answer3BorderBrush, UpdateSourceTrigger=PropertyChanged}" TextChanged="{x:Bind ViewModel.OnAnswer3Changed}"
+                             Grid.Row="1" Grid.Column="1" PlaceholderText="Answer 3" Padding="9,9,9,9" Height="45"/>
+
+                    <!-- Answer 4 -->
+                    <RadioButton x:Name="RadioButton4"
+                                 IsChecked="{Binding Path=RadioButton4.IsChecked, Mode=TwoWay}"
+                                 IsEnabled="{Binding Path=RadioButton4.IsEnabled, Mode=TwoWay}"
+                                 Checked="{x:Bind ViewModel.RadioButtonChecked}" Grid.Row="1" Grid.Column="2" Tag="Answer 4"/>
+                    <TextBox x:Name="Answer4Input"
+                             Text="{Binding Path=Answer4InputText.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             IsEnabled="{Binding Path=Answer4InputText.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             BorderThickness="2.5" BorderBrush="{Binding Path=Answer4BorderBrush, UpdateSourceTrigger=PropertyChanged}" TextChanged="{x:Bind ViewModel.OnAnswer4Changed}"
+                             Grid.Row="1" Grid.Column="3" Margin="0,0,0,0" PlaceholderText="Answer 4" Padding="9,9,9,9" Height="45" />
+                </Grid>
+
+                <StackPanel Orientation="Horizontal" RelativePanel.Below="AnswerGrid" RelativePanel.AlignHorizontalCenterWithPanel="True">
+
+                    <Button Click="{x:Bind ViewModel.GoBack}"
+                            Height="60" Width="60" VerticalAlignment="Bottom" Padding="0" BorderThickness="0">
+                        <Grid>
+                            <Image Source="../../Assets/button_grey_bg.png" Stretch="UniformToFill"/>
+                            <FontIcon Foreground="White"  FontFamily="Segoe MDL2 Assets" Glyph="&#xE72B;" FontSize="30" FontWeight="ExtraBold" />
+                        </Grid>
+                    </Button>
+                    <Button Click="{x:Bind ViewModel.AddQuestion}"
+                            Height="60" Width="60" VerticalAlignment="Bottom" Padding="0" BorderThickness="0" Margin="30,30,0,0">
+                        <Grid>
+                            <Image Source="../../Assets/button_green_bg.png" Stretch="UniformToFill"/>
+                            <FontIcon Foreground="White"  FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;" FontSize="30" FontWeight="ExtraBold" />
+                        </Grid>
+                    </Button>
+                    <Button Click="{x:Bind ViewModel.AddQuiz}"
+                        Height="60" Width="60" VerticalAlignment="Bottom" Padding="0" BorderThickness="0" Margin="30,30,0,0">
+                        <Grid>
+                            <Image Source="../../Assets/button_yellow_bg.png" Stretch="UniformToFill"/>
+                            <FontIcon Foreground="White"  FontFamily="Segoe MDL2 Assets" Glyph="&#xE8FB;" FontSize="30" FontWeight="ExtraBold" />
+                        </Grid>
+                    </Button>
+                </StackPanel>
+            </RelativePanel>
+
+            <ListView x:Name="QuestionsListView"
+                      Background="SlateGray"  Opacity="0.7" HorizontalAlignment="Right"
+                      IsItemClickEnabled="True" ItemClick="{x:Bind ViewModel.ClickedItem}"
+                      ItemsSource="{x:Bind ViewModel.QuestionsObservableCollection, Mode=OneWay}"
+                      Margin="0,30,30,0" Height="300" VerticalAlignment="Top" Width="339">
+                <ListView.ItemTemplate>
+
+                    <DataTemplate>
+
+                        <TextBlock Text="{Binding QuestionText}"></TextBlock>
+
+                    </DataTemplate>
+
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Grid>
+</Page>

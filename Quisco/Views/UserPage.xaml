@@ -1,0 +1,51 @@
+﻿<Page
+    x:Class="Quisco.Views.UserPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Style="{StaticResource PageStyle}"
+    mc:Ignorable="d">
+    <Grid
+        Style="{StaticResource ImageStyle}"
+        x:Name="ContentArea"
+    >
+
+        <RelativePanel x:Name="MainRelativePanel">
+            <StackPanel x:Name="ButtonsStackPanel" Orientation="Vertical" Margin="40,0,0,0" VerticalAlignment="Center" RelativePanel.AlignVerticalCenterWithPanel="True">
+                <Button Click="{x:Bind ViewModel.EditButton}" Height="60" Width="200" VerticalAlignment="Top" Padding="0" BorderThickness="0" Margin="0,0,0,40">
+                    <Grid>
+                        <Image Source="../Assets/button_blue_bg.png" Stretch="UniformToFill"/>
+                        <TextBlock
+                            Text="Edit Quiz" FontFamily="{StaticResource DefaultFont}" FontWeight="Bold" FontSize="25"
+                            Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                    </Grid>
+                </Button>
+
+                <Button Click="{x:Bind ViewModel.DeleteQuiz}" Height="60" Width="200" VerticalAlignment="Bottom" Padding="0" BorderThickness="0">
+                    <Grid>
+                        <Image Source="../Assets/button_red_bg.png" Stretch="UniformToFill"/>
+                        <TextBlock
+                            Text="Delete Quiz" FontFamily="{StaticResource DefaultFont}" FontWeight="Bold" FontSize="25"
+                            Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                    </Grid>
+                </Button>
+            </StackPanel>
+            <ListView x:Name="NewestQuizzesListView"  Margin="40" Width="400" Background="SlateGray" Opacity="0.7"
+                      RelativePanel.AlignTopWithPanel="True" 
+                      RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+                      IsItemClickEnabled="True" ItemClick="{x:Bind ViewModel.ClickItemList}"
+                      ItemsSource="{x:Bind ViewModel.QuizzesObservableCollection, Mode=OneWay}">
+                <ListView.ItemTemplate>
+
+                    <DataTemplate>
+
+                        <TextBlock Text="{Binding QuizName}"></TextBlock>
+
+                    </DataTemplate>
+
+                </ListView.ItemTemplate>
+            </ListView>
+        </RelativePanel>
+    </Grid>
+</Page>
