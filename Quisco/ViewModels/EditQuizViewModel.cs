@@ -19,7 +19,7 @@ using Quisco.Views;
 
 namespace Quisco.ViewModels
 {
-    public class EditQuizViewModel : BindableBase, INotifyPropertyChanged
+    public class EditQuizViewModel : BindableBase
     {
         private Quiz quiz;
         private Question question;
@@ -41,7 +41,6 @@ namespace Quisco.ViewModels
             this.quizParams = quizParams;
             this.quiz = quizParams.Quiz;
             this.questionToHandle = quizParams.QuestionToHandle;
-
             question = quiz.QuestionList.ElementAtOrDefault(questionToHandle - 1);
             BuildViews();
         }
@@ -64,17 +63,17 @@ namespace Quisco.ViewModels
                     //updating quiz and question's ICollections and deleting their ILists.
                     quiz.Questions.Clear();
                     foreach (Question q in quiz.QuestionList) quiz.Questions.Add(q);
-                    quiz.QuestionList = null;
+                    quiz.QuestionList.Clear();
                     foreach (var question in quiz.Questions)
                     {
                         question.Answers.Clear();
                         foreach (var answer in question.AnswersList) question.Answers.Add(answer);
-                        question.AnswersList = null;
+                        question.AnswersList.Clear();
                     }
                     
                     if (IdentityService.IsLoggedIn())
 
-                    if (await quizzesDataAccess.UpdateQuizAsync(quiz).ConfigureAwait(true))
+                    if (await quizzesDataAccess.UpdateQuizCascadingAsync(quiz).ConfigureAwait(true))
                     {
                         NavigationService.Navigate(typeof(MainPage));
                     }
@@ -113,11 +112,11 @@ namespace Quisco.ViewModels
             set => SetProperty(ref questionNumberText, value);
         }
 
-
-        private ObservableCollection<Question> questionsObservableCollection = new ObservableCollection<Question>();
+        public ObservableCollection<Question> questionsObservableCollection = new ObservableCollection<Question>();
         public ObservableCollection<Question> QuestionsObservableCollection
         {
             get => questionsObservableCollection;
+            set => SetProperty(ref questionsObservableCollection, value);
         }
 
         private SolidColorBrush answer1BorderBrush = new SolidColorBrush();
@@ -267,23 +266,51 @@ namespace Quisco.ViewModels
             RefreshTextBoxColors();
         }
 
-        private void SetAnswersToQuestion(Question question)
+        private void SetAnswersToQuestion()
         {
-            Answer a1 = new Answer(Answer1InputText.Text, question, 1, question.QuestionId);
+            //answer1
+            string a1 = Answer1InputText.Text; 
             if (RadioButton1.IsChecked) question.CorrectAnswerNumber = 1;
-            question.AnswersList.Add(a1);
+            if (question.AnswersList.Count > 0) //answer exists in list
+                question.AnswersList[0].AnswerText = a1; //edit this index in answer list
+            else question.AnswersList.Add(new Answer(a1, question, 1, question.QuestionId)); //adding new answer
 
-            Answer a2 = new Answer(Answer2InputText.Text, question, 2, question.QuestionId);
+            //answer2
+            string a2 = Answer2InputText.Text;
             if (RadioButton2.IsChecked) question.CorrectAnswerNumber = 2;
-            question.AnswersList.Add(a2);
+            if (question.AnswersList.Count > 1)
+                question.AnswersList[1].AnswerText = a2;
+            else question.AnswersList.Add(new Answer(a2, question, 3, question.QuestionId));
 
-            Answer a3 = new Answer(Answer3InputText.Text, question, 3, question.QuestionId);
+            //answer3.
+            string a3 = Answer3InputText.Text;
             if (RadioButton3.IsChecked) question.CorrectAnswerNumber = 3;
-            if (!string.IsNullOrEmpty(a3.AnswerText)) question.AnswersList.Add(a3);
+            if (!string.IsNullOrEmpty(a3))
+            {
+                if(question.AnswersList.Count > 2)
+                    question.AnswersList[2].AnswerText = a3;
+                else question.AnswersList.Add(new Answer(a3, question,3, question.QuestionId));
+            }else if (question.AnswersList.Count > 2)//annswer3input is empty.
+            {
+                question.AnswersList[2].ToBeDeleted = true; //removes answer if there exists one
+                question.AnswersList[2].AnswerText = ""; //resets answer text
 
-            Answer a4 = new Answer(Answer4InputText.Text, question, 4, question.QuestionId);
+            } 
+
+            //answer4
+            string a4 = Answer4InputText.Text;
             if (RadioButton4.IsChecked) question.CorrectAnswerNumber = 4;
-            if (!string.IsNullOrEmpty(a4.AnswerText)) question.AnswersList.Add(a4);
+            if (!string.IsNullOrEmpty(a4))
+            {
+                if(question.AnswersList.Count > 3)
+                    question.AnswersList[3].AnswerText = a4;
+                else question.AnswersList.Add(new Answer(a4, question, 4, question.QuestionId));
+            }
+            else if (question.AnswersList.Count > 3)
+            {
+                question.AnswersList[3].ToBeDeleted = true;
+                question.AnswersList[3].AnswerText = "";
+            }
         }
 
         public void AddQuestion(object sender, RoutedEventArgs e)
@@ -304,8 +331,7 @@ namespace Quisco.ViewModels
             {
                 question.QuestionText = QuestionInputText;
                 question.QuestionNumber = questionToHandle;
-                question.AnswersList.Clear();
-                SetAnswersToQuestion(question);
+                SetAnswersToQuestion();
             }
             else
             {
@@ -317,6 +343,7 @@ namespace Quisco.ViewModels
 
             quizParams.QuestionToHandle = quiz.QuestionList.Count + 1;
             quiz.QuizName = QuizNameHeader;
+            quizParams.Quiz = quiz;
             Initialize(quizParams);
         }
 
@@ -342,10 +369,8 @@ namespace Quisco.ViewModels
 
         private bool AnswersAreValid()
         {
-            if (Answer1InputText.Text.Length < 1) return false;
-            if (Answer2InputText.Text.Length < 1) return false;
-            //asnswer 4 is filled  but not 3 (should not be possible)
-            if (!string.IsNullOrEmpty(Answer4InputText.Text) && string.IsNullOrEmpty(Answer3InputText.Text)) return false;
+            if (string.IsNullOrEmpty(Answer1InputText.Text)) return false;
+            if (string.IsNullOrEmpty(Answer2InputText.Text)) return false;
             return true;
         }
 
@@ -365,7 +390,8 @@ namespace Quisco.ViewModels
 
             QuizNameHeader = quiz.QuizName;
             QuestionNumberText = "Edit question " + questionToHandle;
-            QuestionsObservableCollection.Clear();
+            //for some weird reason the listview will only update half the time I do changes, unless I do this
+            QuestionsObservableCollection = new ObservableCollection<Question>(); 
             foreach (Question q in quiz.QuestionList) QuestionsObservableCollection.Add(q);
 
             RefreshTextBoxColors();
@@ -521,15 +547,15 @@ namespace Quisco.ViewModels
 
         private async Task<bool> DisplayAreYouSureDialog()
         {
-            ContentDialog deleteFileDialog = new ContentDialog
+            ContentDialog fileDialog = new ContentDialog
             {
                 Title = "All ready to go.",
-                Content = "Are you sure you want to complete the quiz?",
+                Content = "Are you sure you're done editing the quiz?",
                 PrimaryButtonText = "Yes",
                 CloseButtonText = "Cancel"
             };
 
-            ContentDialogResult result = await deleteFileDialog.ShowAsync();
+            ContentDialogResult result = await fileDialog.ShowAsync();
 
             return result == ContentDialogResult.Primary; // true if clicked "yes", false if closed
         }

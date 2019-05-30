@@ -30,9 +30,9 @@
                     </Grid>
                 </Button>
             </StackPanel>
-            <ListView x:Name="NewestQuizzesListView" Width="300" Height="450" Margin="40" Background="SlateGray" Opacity="0.7"
-                      RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True"
-                      IsItemClickEnabled="True" ItemClick="{x:Bind ViewModel.ClickItemList}"
+            <ListView x:Name="NewestQuizzesListView" Width="300" MinHeight="450"  Margin="40,170,40,40" Background="SlateGray" Opacity="0.7"
+                      RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True"
+                      IsItemClickEnabled="True" ItemClick="{x:Bind ViewModel.ClickItemList}" 
                       ItemsSource="{x:Bind ViewModel.QuizzesObservableCollection, Mode=OneWay}">
                 <ListView.ItemTemplate>
 

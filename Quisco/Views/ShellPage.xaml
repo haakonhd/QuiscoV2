@@ -126,6 +126,8 @@
         </winui:NavigationView.PaneFooter>
         <Grid>
             <Frame x:Name="shellFrame" />
+            <Image x:Name="LogoImage"  HorizontalAlignment="Center" Height="143" Margin="0,30,0,0" VerticalAlignment="Top" Width="240" Source="../Assets/logo.png"/>
+
         </Grid>
     </winui:NavigationView>
 </Page>

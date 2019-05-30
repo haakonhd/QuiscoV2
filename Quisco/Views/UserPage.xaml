@@ -31,7 +31,7 @@
                     </Grid>
                 </Button>
             </StackPanel>
-            <ListView x:Name="NewestQuizzesListView"  Margin="40" Width="400" Background="SlateGray" Opacity="0.7"
+            <ListView x:Name="NewestQuizzesListView"  Margin="40,170,40,40" Width="400" Background="SlateGray" Opacity="0.7"
                       RelativePanel.AlignTopWithPanel="True" 
                       RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True"
                       IsItemClickEnabled="True" ItemClick="{x:Bind ViewModel.ClickItemList}"

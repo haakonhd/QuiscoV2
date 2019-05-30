@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 using Windows.Web.Http;
 using Newtonsoft.Json;
@@ -43,7 +44,7 @@ namespace Quisco.ViewModels
             //TODO: errorhandling no internet
             var thisHashId = HashGenerator.ComputeSha256Hash(IdentityService.GetAccountIdentifier());
 
-            var quizList = await quizRequest.GetQuizzesFromIdHash(thisHashId).ConfigureAwait(true);
+            var quizList = await quizRequest.GetQuizzesFromIdHashAsync(thisHashId).ConfigureAwait(true);
             foreach(Quiz q in quizList)
                 QuizzesObservableCollection.Add(q);
         }
@@ -53,7 +54,8 @@ namespace Quisco.ViewModels
         public async void EditButton(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             QuizRequest quizRequest = new QuizRequest();
-            var completeQuiz = await quizRequest.GetCompleteQuiz(quizParams.Quiz).ConfigureAwait(true);
+            //TODO: error no quiz selected
+            var completeQuiz = await quizRequest.GetCompleteQuizAsync(quizParams.Quiz).ConfigureAwait(true);
             quizParams.Quiz = completeQuiz;
 
             //TODO: error no selected quiz
@@ -70,9 +72,31 @@ namespace Quisco.ViewModels
                 NavigationService.Navigate(typeof(EditQuiz), quizParams);
             
         }
-        public void DeleteQuiz(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
 
+        public async void DeleteQuiz(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            Quiz quiz = quizParams.Quiz;
+            QuizRequest quizzesDataAccess = new QuizRequest();
+            var myHashId = HashGenerator.ComputeSha256Hash(IdentityService.GetAccountIdentifier());
+            if (myHashId != quizParams.Quiz.UserIdHash)
+            {
+                DisplayErrorMessageAsync("Error. UserId hash did not match quiz's UserId hash.");
+                return;
+            }
+
+            bool userConfirmed = await DisplayAreYouSureDialog().ConfigureAwait(true);
+            if (userConfirmed)
+            {
+            if (IdentityService.IsLoggedIn())
+                if (await quizzesDataAccess.DeleteQuizAsync(quiz).ConfigureAwait(true))
+                {
+                    NavigationService.Navigate(typeof(MainPage));
+                }
+                else
+                {
+                    DisplayErrorMessageAsync("There was an error deleting the quiz.");
+                }
+            }
         }
         public void ClickItemList(object sender, ItemClickEventArgs e)
         {
@@ -80,7 +104,26 @@ namespace Quisco.ViewModels
 
             quizParams.Quiz = selectedItem;
         }
+        private async Task<bool> DisplayAreYouSureDialog()
+        {
+            ContentDialog deleteFileDialog = new ContentDialog
+            {
+                Title = "Deleting quiz.",
+                Content = "Are you sure you want to delete the quiz \"" + quizParams.Quiz.QuizName + "'?" ,
+                PrimaryButtonText = "Yes",
+                CloseButtonText = "Cancel"
+            };
 
+            ContentDialogResult result = await deleteFileDialog.ShowAsync();
+
+            return result == ContentDialogResult.Primary; // true if clicked "yes", false if closed
+        }
+
+        private async void DisplayErrorMessageAsync(string errorMessage)
+        {
+            MessageDialog dialog = new MessageDialog(errorMessage);
+            await dialog.ShowAsync();
+        }
     }
 
 }

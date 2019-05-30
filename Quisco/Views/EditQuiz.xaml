@@ -126,7 +126,7 @@
             <ListView x:Name="QuestionsListView"
                       Background="SlateGray"  Opacity="0.7" HorizontalAlignment="Right"
                       IsItemClickEnabled="True" ItemClick="{x:Bind ViewModel.ClickedItem}"
-                      ItemsSource="{x:Bind ViewModel.QuestionsObservableCollection, Mode=OneWay}"
+                      ItemsSource="{Binding Path=QuestionsObservableCollection, UpdateSourceTrigger=PropertyChanged}"
                       Margin="0,30,30,0" Height="300" VerticalAlignment="Top" Width="339">
                 <ListView.ItemTemplate>
 

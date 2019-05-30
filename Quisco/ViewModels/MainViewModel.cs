@@ -76,13 +76,11 @@ namespace Quisco.ViewModels
             //TODO: errorhandling no internet
             var quizList = await GetQuizList().ConfigureAwait(true);
             // inserts quizzes to the listView with the newest first
-            /*
 
             foreach (var quiz in quizList)
             {
                 QuizzesObservableCollection.Add(quiz);
             }
-            */
         }
 
         public void ClickItemList(object sender, ItemClickEventArgs e)
