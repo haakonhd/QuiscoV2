@@ -1,0 +1,60 @@
+﻿<Page
+    x:Class="Quisco.Views.Take.TakeQuiz"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    Style="{StaticResource PageStyle}"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <converters:BoolToVisibilityConverter x:Key="Boolean" />
+    </Page.Resources>
+    <Grid
+        Style="{StaticResource ImageStyle}"
+        x:Name="ContentArea">
+        <RelativePanel x:Name="MainRelativePanel">
+            <RelativePanel RelativePanel.AlignLeftWithPanel="True" AlignRightWithPanel="True" Margin="150,200,150,100"
+                           RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True"
+                           Background="LightGray"
+                           Opacity="0.3">
+            </RelativePanel>
+            <RelativePanel RelativePanel.AlignLeftWithPanel="True" AlignRightWithPanel="True" Margin="150,200,150,100"
+                           RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True">
+
+                <TextBlock x:Name="QuizNameTextBlock" Text="{x:Bind ViewModel.QuizNameTextBlock, Mode=OneWay}"
+                           FontFamily="{StaticResource DefaultFont}" FontWeight="Bold" FontSize="35"
+                    Foreground="White" Margin="30,30,0,0" />
+
+                <StackPanel Orientation="Vertical" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+                            Margin="40">
+                    <Button Click="{x:Bind ViewModel.ShowAnswerButton}" Height="100" Width="100"  Padding="0" BorderThickness="0"
+                            Visibility="{x:Bind ViewModel.ShowAnswerIsVisible, Mode=OneWay, ConverterParameter=Reverse, Converter={StaticResource Boolean}}">
+                        <Grid>
+                            <Image Source="../../Assets/button_green_bg.png" Stretch="UniformToFill"/>
+                            <FontIcon Foreground="White"  FontFamily="Segoe MDL2 Assets" Glyph="&#xE8FB;" FontSize="40" FontWeight="ExtraBold" />
+                        </Grid>
+                    </Button>
+
+                    <Button Click="{x:Bind ViewModel.ShowAnswerButton}" Height="100" Width="100"  Padding="0" BorderThickness="0"
+                            Visibility="{x:Bind ViewModel.ShowAnswerIsVisible, Mode=OneWay, ConverterParameter=Reverse, Converter={StaticResource Boolean}}">
+                        <Grid>
+                            <Image Source="../../Assets/button_blue_bg.png" Stretch="UniformToFill"/>
+                            <FontIcon Foreground="White"  FontFamily="Segoe MDL2 Assets" Glyph="&#xE111;" FontSize="40" FontWeight="ExtraBold" />
+                        </Grid>
+                    </Button>
+
+                    <Button Click="{x:Bind ViewModel.PreviousQuestionButton}" Height="100" Width="100"  Padding="0" BorderThickness="0"
+                            Visibility="{x:Bind ViewModel.PreviousQuestionIsVisible, Mode=OneWay, ConverterParameter=Reverse, Converter={StaticResource Boolean}}">
+                        <Grid>
+                            <Image Source="../../Assets/button_blue_bg.png" Stretch="UniformToFill"/>
+                            <FontIcon Foreground="White"  FontFamily="Segoe MDL2 Assets" Glyph="&#xE112;" FontSize="40" FontWeight="ExtraBold" />
+                        </Grid>
+                    </Button>
+                </StackPanel>
+
+            </RelativePanel>
+            
+        </RelativePanel>
+    </Grid>
+</Page>

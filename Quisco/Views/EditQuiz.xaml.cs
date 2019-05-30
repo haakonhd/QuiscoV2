@@ -29,7 +29,6 @@ namespace Quisco.Views
             Frame rootFrame = Window.Current.Content as Frame;
             if (quizParams != null)
             {
-                quizParams.CurrentFrame = rootFrame;
                 ViewModel = new EditQuizViewModel();
             }
 

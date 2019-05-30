@@ -54,7 +54,11 @@ namespace Quisco.ViewModels
         public async void EditButton(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             QuizRequest quizRequest = new QuizRequest();
-            //TODO: error no quiz selected
+            if (quizParams.Quiz == null)
+            {
+                DisplayErrorMessageAsync("Please select a quiz from the list");
+                return;
+            }
             var completeQuiz = await quizRequest.GetCompleteQuizAsync(quizParams.Quiz).ConfigureAwait(true);
             quizParams.Quiz = completeQuiz;
 
@@ -75,6 +79,11 @@ namespace Quisco.ViewModels
 
         public async void DeleteQuiz(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
+            if (quizParams.Quiz == null)
+            {
+                DisplayErrorMessageAsync("Please select a quiz from the list");
+                return;
+            }
             Quiz quiz = quizParams.Quiz;
             QuizRequest quizzesDataAccess = new QuizRequest();
             var myHashId = HashGenerator.ComputeSha256Hash(IdentityService.GetAccountIdentifier());

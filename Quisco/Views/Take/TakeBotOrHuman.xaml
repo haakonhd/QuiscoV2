@@ -20,7 +20,7 @@
                        RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.Above="IconsStackPanel"></TextBlock>
             <StackPanel Orientation="Horizontal" x:Name="IconsStackPanel"
                         RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
-                <Button Click="TakeBotQuiz" Height="200" Width="200" Padding="0" BorderThickness="0" Margin="0,0,60,0">
+                <Button Click="{x:Bind ViewModel.TakeRobotQuizButton}" Height="200" Width="200" Padding="0" BorderThickness="0" Margin="0,0,60,0">
                     <Grid>
                         <Image Source="../../Assets/button_blue_bg.png" Stretch="UniformToFill"/>
                         <Grid Padding="10">
@@ -30,7 +30,7 @@
                     </Grid>
                 </Button>
 
-                <Button Click="TakeHumanQuiz" Height="200" Width="200" Padding="0" BorderThickness="0">
+                <Button Click="{x:Bind ViewModel.TakeHumanQuizButton}" Height="200" Width="200" Padding="0" BorderThickness="0">
                     <Grid>
                         <Image Source="../../Assets/button_blue_bg.png" Stretch="UniformToFill"/>
                         <Grid Padding="10">

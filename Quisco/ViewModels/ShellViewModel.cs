@@ -112,6 +112,8 @@ namespace Quisco.ViewModels
             IsLoggedIn = IdentityService.IsLoggedIn();
             IsAuthorized = IsLoggedIn && IdentityService.IsAuthorized();
             User = await UserDataService.GetUserAsync();
+            _navigationView.IsPaneOpen = false;
+            _navigationView.AlwaysShowHeader = false;
         }
 
         private void OnUserDataUpdated(object sender, UserViewModel userData)

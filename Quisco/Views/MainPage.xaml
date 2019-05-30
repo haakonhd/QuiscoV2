@@ -11,7 +11,7 @@
         x:Name="ContentArea"
     >
         <RelativePanel x:Name="MainRelativePanel">
-            <StackPanel Orientation="Vertical" Margin="40,0,0,0" VerticalAlignment="Center" RelativePanel.AlignVerticalCenterWithPanel="True">
+            <StackPanel Orientation="Vertical" Margin="40,0,100,0" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True">
                 <Button Click="{x:Bind ViewModel.CreateQuiz}" Height="60" Width="200" VerticalAlignment="Top" Padding="0" BorderThickness="0" Margin="0,0,0,40">
                     <Grid>
                         <Image Source="../Assets/button_blue_bg.png" Stretch="UniformToFill"/>
@@ -30,8 +30,11 @@
                     </Grid>
                 </Button>
             </StackPanel>
-            <ListView x:Name="NewestQuizzesListView" Width="300" MinHeight="450"  Margin="40,170,40,40" Background="SlateGray" Opacity="0.7"
-                      RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True"
+            <TextBlock
+                Text="Newest quizzes" FontFamily="{StaticResource DefaultFont}" FontWeight="Bold" FontSize="25"
+                Foreground="White" Margin="0,0,40,0" RelativePanel.Above="NewestQuizzesListView" RelativePanel.AlignHorizontalCenterWith="NewestQuizzesListView"/>
+            <ListView x:Name="NewestQuizzesListView" Width="300" MinHeight="550"  Margin="0,10,40,40" Background="SlateGray" Opacity="0.7"
+                      RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True" 
                       IsItemClickEnabled="True" ItemClick="{x:Bind ViewModel.ClickItemList}" 
                       ItemsSource="{x:Bind ViewModel.QuizzesObservableCollection, Mode=OneWay}">
                 <ListView.ItemTemplate>

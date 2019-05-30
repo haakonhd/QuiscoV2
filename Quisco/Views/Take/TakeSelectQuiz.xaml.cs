@@ -21,10 +21,10 @@ namespace Quisco.Views.Take
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class TakeBotOrHuman : Page
+    public sealed partial class TakeSelectQuiz : Page
     {
-        public TakeBotOrHumanViewModel ViewModel { get; } = new TakeBotOrHumanViewModel();
-        public TakeBotOrHuman()
+        public TakeSelectQuizViewModel ViewModel { get; } = new TakeSelectQuizViewModel();
+        public TakeSelectQuiz()
         {
             this.InitializeComponent();
         }
@@ -33,7 +33,6 @@ namespace Quisco.Views.Take
             ViewModel.Initialize();
             DataContext = ViewModel;
         }
-
 
     }
 }

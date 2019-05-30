@@ -128,6 +128,7 @@
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\NavHelper.cs" />
     <Compile Include="Helpers\Observable.cs" />
+    <Compile Include="Helpers\QuizCompletionParams.cs" />
     <Compile Include="Helpers\QuizParams.cs" />
     <Compile Include="Helpers\RadioButtonHelper.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
@@ -148,6 +149,9 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="ViewModels\Take\TakeBotOrHumanViewModel.cs" />
+    <Compile Include="ViewModels\Take\TakeQuizViewModel.cs" />
+    <Compile Include="ViewModels\Take\TakeSelectQuizViewModel.cs" />
     <Compile Include="ViewModels\UserPageViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Views\Create\CreateQuestion.xaml.cs">
@@ -173,6 +177,12 @@
     </Compile>
     <Compile Include="Views\Take\TakeBotOrHuman.xaml.cs">
       <DependentUpon>TakeBotOrHuman.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Take\TakeQuiz.xaml.cs">
+      <DependentUpon>TakeQuiz.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Take\TakeSelectQuiz.xaml.cs">
+      <DependentUpon>TakeSelectQuiz.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserPage.xaml.cs">
       <DependentUpon>UserPage.xaml</DependentUpon>
@@ -234,6 +244,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Take\TakeBotOrHuman.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Take\TakeQuiz.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Take\TakeSelectQuiz.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -7,7 +7,6 @@ namespace Quisco.Helpers
     {
         public Quiz Quiz { get; set; }
         public int QuestionToHandle { get; set; }
-        public Frame CurrentFrame { get; set; }
 
         public QuizParams(Quiz quiz, int questionToHandle)
         {
