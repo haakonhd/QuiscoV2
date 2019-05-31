@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using Windows.Web.Http;
 using Newtonsoft.Json;
@@ -6,12 +7,12 @@ using Quisco.Model;
 
 namespace Quisco.DataAccess
 {
-    public class QuestionRequest
+    public static class QuestionRequest
     {
         static Uri questionsBaseUri = new Uri("http://localhost:55418/api/Questions/");
-        HttpClient httpClient = new HttpClient();
+        static HttpClient httpClient = new HttpClient();
 
-        public async Task<Question[]> GetQuestionListByQuizIdAsync(int id)
+        public static async Task<Question[]> GetQuestionListByQuizIdAsync(int id)
         {
             UriBuilder questionsUri = new UriBuilder(questionsBaseUri + "quizId/" + id);
 
@@ -21,9 +22,9 @@ namespace Quisco.DataAccess
             return questionList;
         }
 
-        public async Task<Question> GetQuestionByIdAsync(int id)
+        public static async Task<Question> GetQuestionByIdAsync(int id)
         {
-            Uri questionsUri = new Uri(questionsBaseUri + id.ToString());
+            Uri questionsUri = new Uri(questionsBaseUri + id.ToString(CultureInfo.InvariantCulture));
 
             var result = await httpClient.GetAsync(questionsUri);
             var json = await result.Content.ReadAsStringAsync();
@@ -31,14 +32,14 @@ namespace Quisco.DataAccess
             return question;
         }
 
-        public async Task<bool> QuestionExists(int id)
+        public static async Task<bool> QuestionExists(int id)
         {
             var a = await GetQuestionByIdAsync(id).ConfigureAwait(true);
             if (a == null) return false;
             return true;
         }
 
-        public async Task<bool> UpdateQuestion(Question question)
+        public static async Task<bool> UpdateQuestion(Question question)
         {
             //Adds new question if it's new
             if (question.QuestionId == 0)
@@ -50,7 +51,7 @@ namespace Quisco.DataAccess
             else
             {
                 //Updates question
-                Uri questionsUri = new Uri(questionsBaseUri + question.QuestionId.ToString());
+                Uri questionsUri = new Uri(questionsBaseUri + question.QuestionId.ToString(CultureInfo.InvariantCulture));
 
                 var json = JsonConvert.SerializeObject(question, Formatting.None,
                     new JsonSerializerSettings()
@@ -64,7 +65,7 @@ namespace Quisco.DataAccess
             }
         }
 
-        public async Task<bool> AddQuestionToDbAsync(Question question)
+        public static async Task<bool> AddQuestionToDbAsync(Question question)
         {
             question.BelongingQuiz = null;
             var json = JsonConvert.SerializeObject(question, Formatting.None,
@@ -77,7 +78,7 @@ namespace Quisco.DataAccess
             return result.IsSuccessStatusCode;
         }
 
-        public async Task<Question[]> GetQuestionListAsync()
+        public static async Task<Question[]> GetQuestionListAsync()
         {
             var result = await httpClient.GetAsync(questionsBaseUri);
             var json = await result.Content.ReadAsStringAsync();

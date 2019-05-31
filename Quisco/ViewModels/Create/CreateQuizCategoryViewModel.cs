@@ -77,7 +77,7 @@ namespace Quisco.ViewModels.Create
             NavigationService.Navigate(typeof(CreateQuestion), quizParams);
         }
 
-        public void ClickedBack(object sender, RoutedEventArgs e)
+        public void ClickedBack()
         {
             if (SelectedItem != null)
                 quiz.QuizCategory = SelectedItem.ToString();

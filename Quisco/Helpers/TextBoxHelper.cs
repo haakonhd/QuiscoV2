@@ -18,8 +18,7 @@ namespace Quisco.Helpers
             }
         }
 
-        public bool isEnabled;
-
+        private bool isEnabled;
         public bool IsEnabled
         {
             get { return isEnabled; }

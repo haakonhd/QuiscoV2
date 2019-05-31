@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using Windows.Web.Http;
 using Newtonsoft.Json;
@@ -6,12 +7,12 @@ using Quisco.Model;
 
 namespace Quisco.DataAccess
 {
-    public class AnswerRequest
+    public static class AnswerRequest
     {
-        private static readonly Uri answersBaseUri = new Uri("http://localhost:55418/api/Answers/");
-        private readonly HttpClient httpClient = new HttpClient();
+        private static Uri answersBaseUri = new Uri("http://localhost:55418/api/Answers/");
+        private static HttpClient httpClient = new HttpClient();
 
-        public async Task<Answer[]> GetAnswerList()
+        public static async Task<Answer[]> GetAnswerList()
         {
             var result = await httpClient.GetAsync(answersBaseUri);
             var json = await result.Content.ReadAsStringAsync();
@@ -19,7 +20,7 @@ namespace Quisco.DataAccess
             return answerList;
         }
 
-        public async Task<Answer[]> GetAnswerListByQuestionId(int id)
+        public static async Task<Answer[]> GetAnswerListByQuestionId(int id)
         {
             UriBuilder answersUri = new UriBuilder(answersBaseUri + "questionId/" + id);
 
@@ -29,9 +30,9 @@ namespace Quisco.DataAccess
             return answerList;
         }
 
-        public async Task<Answer> GetAnswerByIdAsync(int id)
+        public static async Task<Answer> GetAnswerByIdAsync(int id)
         {
-            Uri answersUri = new Uri(answersBaseUri + id.ToString());
+            Uri answersUri = new Uri(answersBaseUri + id.ToString(CultureInfo.InvariantCulture));
 
             var result = await httpClient.GetAsync(answersUri);
             var json = await result.Content.ReadAsStringAsync();
@@ -39,14 +40,14 @@ namespace Quisco.DataAccess
             return answer;
         }
 
-        public async Task<bool> AnswerExists(int id)
+        public static async Task<bool> AnswerExists(int id)
         {
             var a = await GetAnswerByIdAsync(id).ConfigureAwait(true);
             if (a == null) return false;
             return true;
         }
 
-        public async Task<bool> AddAnswerToDbAsync(Answer answer)
+        public static async Task<bool> AddAnswerToDbAsync(Answer answer)
         {
             answer.BelongingQuestion = null;
             var json = JsonConvert.SerializeObject(answer, Formatting.None,
@@ -59,7 +60,7 @@ namespace Quisco.DataAccess
             return result.IsSuccessStatusCode;
         }
 
-        public async Task<bool> UpdateAnswer(Answer answer)
+        public static async Task<bool> UpdateAnswer(Answer answer)
         {
             if (answer.ToBeDeleted)
             {
@@ -78,7 +79,7 @@ namespace Quisco.DataAccess
                 else
                 {
                     //Updates question
-                    Uri answerUri = new Uri(answersBaseUri + answer.AnswerId.ToString());
+                    Uri answerUri = new Uri(answersBaseUri + answer.AnswerId.ToString(CultureInfo.InvariantCulture));
 
                     var json = JsonConvert.SerializeObject(answer, Formatting.None,
                         new JsonSerializerSettings()
@@ -92,9 +93,9 @@ namespace Quisco.DataAccess
                 }
             }
         }
-        public async Task<bool> DeleteAnswerAsync(Answer answer)
+        public static async Task<bool> DeleteAnswerAsync(Answer answer)
         {
-            Uri uri = new Uri(answersBaseUri + answer.AnswerId.ToString());
+            Uri uri = new Uri(answersBaseUri + answer.AnswerId.ToString(CultureInfo.InvariantCulture));
             var result = await httpClient.DeleteAsync(uri);
 
             return result.IsSuccessStatusCode;

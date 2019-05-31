@@ -24,7 +24,7 @@ namespace Quisco.ViewModels
 
         private IdentityService IdentityService => Singleton<IdentityService>.Instance;
 
-        private ObservableCollection<Quiz> quizzesObservableCollection = new ObservableCollection<Quiz>();
+        private ObservableCollection<Quiz> quizzesObservableCollection;
         public ObservableCollection<Quiz> QuizzesObservableCollection
         {
             get { return quizzesObservableCollection; }
@@ -32,6 +32,7 @@ namespace Quisco.ViewModels
         }
         public void Initialize()
         {
+            QuizzesObservableCollection = new ObservableCollection<Quiz>();
             quizParams = new QuizParams(null,1);
 
             FillQuizList();
@@ -39,12 +40,10 @@ namespace Quisco.ViewModels
 
         public async void FillQuizList()
         {
-            QuizRequest quizRequest = new QuizRequest();
-            
             //TODO: errorhandling no internet
             var thisHashId = HashGenerator.ComputeSha256Hash(IdentityService.GetAccountIdentifier());
 
-            var quizList = await quizRequest.GetQuizzesFromIdHashAsync(thisHashId).ConfigureAwait(true);
+            var quizList = await QuizRequest.GetQuizzesFromIdHashAsync(thisHashId).ConfigureAwait(true);
             foreach(Quiz q in quizList)
                 QuizzesObservableCollection.Add(q);
         }
@@ -53,13 +52,12 @@ namespace Quisco.ViewModels
 
         public async void EditButton(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            QuizRequest quizRequest = new QuizRequest();
             if (quizParams.Quiz == null)
             {
                 DisplayErrorMessageAsync("Please select a quiz from the list");
                 return;
             }
-            var completeQuiz = await quizRequest.GetCompleteQuizAsync(quizParams.Quiz).ConfigureAwait(true);
+            var completeQuiz = await QuizRequest.GetCompleteQuizAsync(quizParams.Quiz).ConfigureAwait(true);
             quizParams.Quiz = completeQuiz;
 
             //TODO: error no selected quiz
@@ -85,7 +83,6 @@ namespace Quisco.ViewModels
                 return;
             }
             Quiz quiz = quizParams.Quiz;
-            QuizRequest quizzesDataAccess = new QuizRequest();
             var myHashId = HashGenerator.ComputeSha256Hash(IdentityService.GetAccountIdentifier());
             if (myHashId != quizParams.Quiz.UserIdHash)
             {
@@ -97,7 +94,7 @@ namespace Quisco.ViewModels
             if (userConfirmed)
             {
             if (IdentityService.IsLoggedIn())
-                if (await quizzesDataAccess.DeleteQuizAsync(quiz).ConfigureAwait(true))
+                if (await QuizRequest.DeleteQuizAsync(quiz).ConfigureAwait(true))
                 {
                     NavigationService.Navigate(typeof(MainPage));
                 }
@@ -128,7 +125,7 @@ namespace Quisco.ViewModels
             return result == ContentDialogResult.Primary; // true if clicked "yes", false if closed
         }
 
-        private async void DisplayErrorMessageAsync(string errorMessage)
+        private static async void DisplayErrorMessageAsync(string errorMessage)
         {
             MessageDialog dialog = new MessageDialog(errorMessage);
             await dialog.ShowAsync();

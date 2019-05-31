@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.Net.Http;
-using System.Text;
+using System.Globalization;
 using System.Threading.Tasks;
 using Windows.Web.Http;
 using Newtonsoft.Json;
@@ -10,12 +8,12 @@ using HttpClient = Windows.Web.Http.HttpClient;
 
 namespace Quisco.DataAccess
 {
-    public class QuizRequest
+    public static class QuizRequest
     {
         static Uri quizzesBaseUri = new Uri("http://localhost:55418/api/Quizzes/");
-        HttpClient httpClient = new HttpClient();
+        static HttpClient httpClient = new HttpClient();
 
-        public async Task<bool> AddQuizToDbAsync(Quiz quiz)
+        public static async Task<bool> AddQuizToDbAsync(Quiz quiz)
         {
             var json = JsonConvert.SerializeObject(quiz, Formatting.None,
                 new JsonSerializerSettings()
@@ -28,17 +26,14 @@ namespace Quisco.DataAccess
             return result.IsSuccessStatusCode;
         }
 
-        public async Task<bool> UpdateQuizCascadingAsync(Quiz quiz)
+        public static async Task<bool> UpdateQuizCascadingAsync(Quiz quiz)
         {
-            QuestionRequest questionRequest = new QuestionRequest();
-            AnswerRequest answerRequest = new AnswerRequest();
-
             bool updateQuizSucceeded = await UpdateQuiz(quiz).ConfigureAwait(true);
             if (!updateQuizSucceeded) return false;
             foreach (var question in quiz.Questions)
             {
                 //Updates question
-                bool updateQuestionSucceeded = await questionRequest.UpdateQuestion(question).ConfigureAwait(true);
+                bool updateQuestionSucceeded = await QuestionRequest.UpdateQuestion(question).ConfigureAwait(true);
                 if (!updateQuestionSucceeded) return false;
                 // updateQuestion() also creates new answers for new questions
                 if (question.QuestionId != 0)
@@ -46,7 +41,7 @@ namespace Quisco.DataAccess
                     foreach (var answer in question.Answers)
                     {
                         //Updates answer
-                        bool updateAnswerSucceeded = await answerRequest.UpdateAnswer(answer).ConfigureAwait(true);
+                        bool updateAnswerSucceeded = await AnswerRequest.UpdateAnswer(answer).ConfigureAwait(true);
                         if (!updateAnswerSucceeded) return false;
                     }
 
@@ -58,10 +53,10 @@ namespace Quisco.DataAccess
 
 
 
-        public async Task<bool> UpdateQuiz(Quiz quiz)
+        public static async Task<bool> UpdateQuiz(Quiz quiz)
         {
             //Updates quiz
-            Uri quizUri = new Uri(quizzesBaseUri + quiz.QuizId.ToString());
+            Uri quizUri = new Uri(quizzesBaseUri + quiz.QuizId.ToString(CultureInfo.InvariantCulture));
             string json;
 
             json = JsonConvert.SerializeObject(quiz, Formatting.None,
@@ -75,7 +70,7 @@ namespace Quisco.DataAccess
         }
 
 
-        public async Task<Quiz[]> GetQuizzesFromIdHashAsync(string userIdHash)
+        public static async Task<Quiz[]> GetQuizzesFromIdHashAsync(string userIdHash)
         {
             UriBuilder quizzesBaseUriBuilder = new UriBuilder("http://localhost:55418/api/Quizzes/userIdHash/" + userIdHash);
             //            quizzesBaseUriBuilder.Query = "UserIdHash=" + userIdHash + ";
@@ -86,28 +81,16 @@ namespace Quisco.DataAccess
             return quizList;
         }
 
-        public async Task<ObservableCollection<Quiz>> GetCompleteQuizzesAsync(Quiz[] quizzes)
-        {
-            ObservableCollection<Quiz> result = new ObservableCollection<Quiz>();
-            foreach (Quiz quiz in quizzes)
-            {
-                result.Add(await GetCompleteQuizAsync(quiz));
-            }
-
-            return result;
-        }
 
         //returns the quiz with all its questions and answers
-        public async Task<Quiz> GetCompleteQuizAsync(Quiz quiz)
+        public static async Task<Quiz> GetCompleteQuizAsync(Quiz quiz)
         {
-            QuestionRequest questionRequest = new QuestionRequest();
-            AnswerRequest answerRequest = new AnswerRequest();
 
-            var questionsTask = await questionRequest.GetQuestionListByQuizIdAsync(quiz.QuizId).ConfigureAwait(true);
+            var questionsTask = await QuestionRequest.GetQuestionListByQuizIdAsync(quiz.QuizId).ConfigureAwait(true);
             Question[] questions = questionsTask;
             foreach (Question question in questions)
             {
-                var answersTask = await answerRequest.GetAnswerListByQuestionId(question.QuestionId).ConfigureAwait(true);
+                var answersTask = await AnswerRequest.GetAnswerListByQuestionId(question.QuestionId).ConfigureAwait(true);
                 Answer[] answers = answersTask;
 
                 foreach (Answer answer in answers)
@@ -120,7 +103,7 @@ namespace Quisco.DataAccess
             return quiz;
         }
 
-        public async Task<Quiz[]> GetQuizListAsync()
+        public static async Task<Quiz[]> GetQuizListAsync()
         {
             var result = await httpClient.GetAsync(quizzesBaseUri);
             var json = await result.Content.ReadAsStringAsync();
@@ -128,9 +111,10 @@ namespace Quisco.DataAccess
             return quizList;
         }
 
-        public async Task<bool> DeleteQuizAsync(Quiz quiz)
+        public static async Task<bool> DeleteQuizAsync(Quiz quiz)
         {
-            Uri uri = new Uri(quizzesBaseUri  + quiz.QuizId.ToString());
+
+            Uri uri = new Uri(quizzesBaseUri  + quiz.QuizId.ToString(CultureInfo.InvariantCulture));
             var result = await httpClient.DeleteAsync(uri);
 
             return result.IsSuccessStatusCode;

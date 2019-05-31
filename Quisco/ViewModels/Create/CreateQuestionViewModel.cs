@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -26,17 +25,10 @@ namespace Quisco.ViewModels.Create
         private Question question;
         private QuizParams quizParams;
         private int questionToHandle;
-        private string selectedAnswerNumber;
 
-        public ICommand AddQuizCommand { get; set; }
-        private QuizRequest quizzesDataAccess = new QuizRequest();
-        public ObservableCollection<Quiz> Quizzes { get; set; } = new ObservableCollection<Quiz>();
+        public ObservableCollection<Quiz> Quizzes { get; } = new ObservableCollection<Quiz>();
 
         private IdentityService IdentityService => Singleton<IdentityService>.Instance;
-
-        public CreateQuestionViewModel()
-        {
-        }
 
         public async void AddQuiz()
         {
@@ -50,17 +42,17 @@ namespace Quisco.ViewModels.Create
                     foreach (Question q in quiz.QuestionList) quiz.Questions.Add(q);
 
                     quiz.QuestionList = null;
-                    foreach (var question in quiz.Questions)
+                    foreach (var q in quiz.Questions)
                     {
-                        question.Answers.Clear();
-                        foreach (var answer in question.AnswersList) question.Answers.Add(answer);
-                        question.AnswersList = null;
+                        q.Answers.Clear();
+                        foreach (var answer in q.AnswersList) q.Answers.Add(answer);
+                        q.AnswersList = null;
                     }
 
                     if (IdentityService.IsLoggedIn())
                         quiz.UserIdHash = HashGenerator.ComputeSha256Hash(IdentityService.GetAccountIdentifier());
 
-                    if (await quizzesDataAccess.AddQuizToDbAsync(quiz).ConfigureAwait(true))
+                    if (await QuizRequest.AddQuizToDbAsync(quiz).ConfigureAwait(true))
                     {
                         Quizzes.Add(quiz);
                         NavigationService.Navigate(typeof(MainPage));
@@ -103,7 +95,7 @@ namespace Quisco.ViewModels.Create
             set => SetProperty(ref questionNumberText, value);
         }
 
-        public ObservableCollection<Question> questionsObservableCollection = new ObservableCollection<Question>();
+        private ObservableCollection<Question> questionsObservableCollection = new ObservableCollection<Question>();
         public ObservableCollection<Question> QuestionsObservableCollection
         {
             get => questionsObservableCollection;
@@ -531,13 +523,13 @@ namespace Quisco.ViewModels.Create
             return isValid;
         }
 
-        private async void DisplayErrorMessageAsync(string errorMessage)
+        private static async void DisplayErrorMessageAsync(string errorMessage)
         {
             MessageDialog dialog = new MessageDialog(errorMessage);
             await dialog.ShowAsync();
         }
 
-        private async Task<bool> DisplayAreYouSureDialog()
+        private static async Task<bool> DisplayAreYouSureDialog()
         {
             ContentDialog fileDialog = new ContentDialog
             {

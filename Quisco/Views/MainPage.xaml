@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
+
     <Grid
         Style="{StaticResource ImageStyle}"
         x:Name="ContentArea"
@@ -35,8 +36,7 @@
                 Foreground="White" Margin="0,0,40,0" RelativePanel.Above="NewestQuizzesListView" RelativePanel.AlignHorizontalCenterWith="NewestQuizzesListView"/>
             <ListView x:Name="NewestQuizzesListView" Width="300" MinHeight="550"  Margin="0,10,40,40" Background="SlateGray" Opacity="0.7"
                       RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True" 
-                      IsItemClickEnabled="True" ItemClick="{x:Bind ViewModel.ClickItemList}" 
-                      ItemsSource="{x:Bind ViewModel.QuizzesObservableCollection, Mode=OneWay}">
+                      SelectionMode="None" ItemsSource="{x:Bind ViewModel.QuizzesObservableCollection, Mode=OneWay}">
                 <ListView.ItemTemplate>
 
                     <DataTemplate>

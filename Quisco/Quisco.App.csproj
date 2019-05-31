@@ -122,9 +122,9 @@
     <Compile Include="DataAccess\ExternalRequest.cs" />
     <Compile Include="DataAccess\QuestionRequest.cs" />
     <Compile Include="DataAccess\QuizRequest.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\AuthenticationHelper.cs" />
     <Compile Include="Helpers\BindableBase.cs" />
-    <Compile Include="Helpers\CategoryHelper.cs" />
     <Compile Include="Helpers\EnumToBooleanConverter.cs" />
     <Compile Include="Helpers\HashGenerator.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />

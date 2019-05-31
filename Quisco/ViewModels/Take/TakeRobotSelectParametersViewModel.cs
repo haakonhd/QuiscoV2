@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Windows.UI.Popups;
 using Quisco.DataAccess;
 using Quisco.Helpers;
 using Quisco.Model;
 using Quisco.Services;
-using Quisco.Views;
 using Quisco.Views.Take;
 
 namespace Quisco.ViewModels.Take
 {
     public class TakeRobotSelectParametersViewModel : Observable 
     {
-        public void Initialize()
-        {
-            
-        }
 
         public string[] QuizCategories =
         {
@@ -95,15 +91,14 @@ namespace Quisco.ViewModels.Take
                 opentdbParams.Category = "&category=" + (SelectedCategoryIndex + 8);
             else opentdbParams.Category = "";
 
-            if (SelectedDifficulty == null || SelectedDifficulty.Equals("All difficulties"))
+            if (SelectedDifficulty == null || SelectedDifficulty.Equals("All difficulties", StringComparison.Ordinal))
                 opentdbParams.Difficulty = "";
-            else  opentdbParams.Difficulty =  "&difficulty=" + SelectedDifficulty.ToLower();
+            else  opentdbParams.Difficulty =  "&difficulty=" + SelectedDifficulty.ToLower(new CultureInfo("en-Us",false));
 
-            if (SelectedAmount == null) opentdbParams.Amount = "&amount=3";
+            if (SelectedAmount == 0) opentdbParams.Amount = "&amount=3";
             opentdbParams.Amount = "&amount=" + selectedAmount;
-            ExternalRequest request = new ExternalRequest();
 
-            RootObject rootObject = await request.GetQuizzesFromExternal(opentdbParams).ConfigureAwait(true);
+            RootObject rootObject = await ExternalRequest.GetQuizzesFromExternal(opentdbParams).ConfigureAwait(true);
             
 
             if (rootObject == null)
@@ -172,7 +167,7 @@ namespace Quisco.ViewModels.Take
             NavigationService.Navigate(typeof(TakeBotOrHuman));
         }
 
-        private async void DisplayErrorMessageAsync(string errorMessage)
+        private static async void DisplayErrorMessageAsync(string errorMessage)
         {
             MessageDialog dialog = new MessageDialog(errorMessage);
             await dialog.ShowAsync();

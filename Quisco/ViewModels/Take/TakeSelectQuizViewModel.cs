@@ -18,15 +18,15 @@ namespace Quisco.ViewModels.Take
         private string quizNameTextBlock;
         public string QuizNameTextBlock
         {
-            get { return quizNameTextBlock; }
-            set { Set(ref quizNameTextBlock, value); }
+            get => quizNameTextBlock; 
+            set => Set(ref quizNameTextBlock, value); 
         }
 
         private string quizCategoryTextBlock;
         public string QuizCategoryTextBlock
         {
-            get { return quizCategoryTextBlock; }
-            set { Set(ref quizCategoryTextBlock, value); }
+            get => quizCategoryTextBlock;
+            set => Set(ref quizCategoryTextBlock, value);
         }
 
         private string quizQuestionsAmountTextBlock;
@@ -36,13 +36,8 @@ namespace Quisco.ViewModels.Take
             set { Set(ref quizQuestionsAmountTextBlock, value); }
         }
 
-        private ObservableCollection<Quiz> quizzesObservableCollection = new ObservableCollection<Quiz>();
 
-        public ObservableCollection<Quiz> QuizzesObservableCollection
-        {
-            get { return quizzesObservableCollection; }
-            set { Set(ref quizzesObservableCollection, value); }
-        }
+        public ObservableCollection<Quiz> QuizzesObservableCollection { get; } = new ObservableCollection<Quiz>();
 
         public void Initialize()
         {
@@ -52,11 +47,12 @@ namespace Quisco.ViewModels.Take
 
         public async void FillQuizList()
         {
-            QuizRequest quizRequest = new QuizRequest();
-
-            //TODO: errorhandling no internet
-
-            var quizList = await quizRequest.GetQuizListAsync().ConfigureAwait(true);
+            Quiz[] quizList = await QuizRequest.GetQuizListAsync().ConfigureAwait(true);
+            if (quizList == null)
+            {
+                DisplayErrorMessageAsync("There was an error loading the quizzes");
+                return;
+            }
             foreach (Quiz q in quizList)
                 QuizzesObservableCollection.Add(q);
         }
@@ -70,7 +66,7 @@ namespace Quisco.ViewModels.Take
             }
 
             // adds collections to list so they are easier to operate on
-            int questionCounter = 1;
+            var questionCounter = 1;
             foreach (Question q in quiz.Questions)
             {
                 q.QuestionNumber = questionCounter++;
@@ -81,25 +77,23 @@ namespace Quisco.ViewModels.Take
 
             if (quiz != null)
             {
-                QuizCompletionParams quizCompletionParams = new QuizCompletionParams();
-                quizCompletionParams.Quiz = quiz;
+                var quizCompletionParams = new QuizCompletionParams {Quiz = quiz};
                 NavigationService.Navigate(typeof(TakeQuiz), quizCompletionParams);
             }
         }
 
         public async void ClickItemList(object sender, ItemClickEventArgs e)
         {
-            QuizRequest quizRequest = new QuizRequest();
             var selectedItem = (Quiz)e.ClickedItem;
-            quiz = await quizRequest.GetCompleteQuizAsync(selectedItem).ConfigureAwait(true);
+            quiz = await QuizRequest.GetCompleteQuizAsync(selectedItem).ConfigureAwait(true);
             QuizNameTextBlock = quiz.QuizName;
             QuizCategoryTextBlock = quiz.QuizCategory;
             QuizQuestionsAmountTextBlock = quiz.Questions.Count + " questions.";
         }
 
-        private async void DisplayErrorMessageAsync(string errorMessage)
+        private static async void DisplayErrorMessageAsync(string errorMessage)
         {
-            MessageDialog dialog = new MessageDialog(errorMessage);
+            var dialog = new MessageDialog(errorMessage);
             await dialog.ShowAsync();
         }
     }

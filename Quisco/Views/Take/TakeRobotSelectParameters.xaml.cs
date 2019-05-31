@@ -23,7 +23,7 @@ namespace Quisco.Views.Take
     /// </summary>
     public sealed partial class TakeRobotSelectParameters : Page
     {
-        public TakeRobotSelectParametersViewModel ViewModel = new TakeRobotSelectParametersViewModel();
+        public TakeRobotSelectParametersViewModel ViewModel { get; set; } 
 
         public TakeRobotSelectParameters()
         {
@@ -31,7 +31,7 @@ namespace Quisco.Views.Take
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ViewModel.Initialize();
+            ViewModel = new TakeRobotSelectParametersViewModel();
             DataContext = ViewModel;
         }
     }

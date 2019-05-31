@@ -23,14 +23,6 @@ namespace Quisco.ViewModels.Take
         private int chosenAnswer;
         /// <summary>The correct answer number</summary>
         private int correctAnswer;
-        /// <summary>The first answer</summary>
-        private Answer answer1;
-        /// <summary>The second answer</summary>
-        private Answer answer2;
-        /// <summary>The third answer</summary>
-        private Answer answer3;
-        /// <summary>The fourth answer</summary>
-        private Answer answer4;
 
         /// <summary>Path for the blue button background</summary>
         BitmapImage blueButtonSource = new BitmapImage(new Uri("ms-appx:///Assets/button_blue_bg.png"));

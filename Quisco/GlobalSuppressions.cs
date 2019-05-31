@@ -1,0 +1,23 @@
+
+// This file is used by Code Analysis to maintain SuppressMessage 
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given 
+// a specific target and scoped to a namespace, type, member, etc.
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "<Pending>", Scope = "member", Target = "~P:Quisco.ViewModels.UserPageViewModel.QuizzesObservableCollection")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:Quisco.ViewModels.MainViewModel.TakeQuiz")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:Quisco.ViewModels.MainViewModel.CreateQuiz")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "<Pending>", Scope = "member", Target = "~P:Quisco.ViewModels.EditQuizViewModel.QuestionsObservableCollection")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "<Pending>", Scope = "member", Target = "~P:Quisco.ViewModels.Create.CreateQuestionViewModel.QuestionsObservableCollection")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:Quisco.ViewModels.Take.TakeRobotSelectParametersViewModel.ClickedBack")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "<Pending>", Scope = "member", Target = "~F:Quisco.ViewModels.Take.TakeRobotSelectParametersViewModel.QuizAmounts")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "<Pending>", Scope = "member", Target = "~F:Quisco.ViewModels.Take.TakeRobotSelectParametersViewModel.QuizDifficulty")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "<Pending>", Scope = "member", Target = "~F:Quisco.ViewModels.Take.TakeRobotSelectParametersViewModel.QuizCategories")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:Quisco.ViewModels.Take.TakeBotOrHumanViewModel.TakeRobotQuizButton(System.Object,Windows.UI.Xaml.RoutedEventArgs)")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:Quisco.ViewModels.Take.TakeBotOrHumanViewModel.TakeHumanQuizButton(System.Object,Windows.UI.Xaml.RoutedEventArgs)")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:Quisco.ViewModels.Take.QuizCompleteViewModel.GoBackButton(System.Object,Windows.UI.Xaml.RoutedEventArgs)")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:Quisco.ViewModels.CreateQuizNameViewModel.ClickedBack(System.Object,Windows.UI.Xaml.RoutedEventArgs)")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "<Pending>", Scope = "member", Target = "~F:Quisco.ViewModels.Create.CreateQuizCategoryViewModel.QuizCategories")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:Quisco.ViewModels.Take.TakeBotOrHumanViewModel.TakeRobotQuizButton")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:Quisco.ViewModels.Take.TakeBotOrHumanViewModel.TakeHumanQuizButton")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:Quisco.ViewModels.Take.QuizCompleteViewModel.GoBackButton")]

@@ -19,7 +19,7 @@ namespace Quisco.Views
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            await ViewModel.InitializeAsync();
+            await ViewModel.InitializeAsync().ConfigureAwait(true);
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)

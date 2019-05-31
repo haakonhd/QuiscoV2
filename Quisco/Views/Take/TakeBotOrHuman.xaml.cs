@@ -30,7 +30,6 @@ namespace Quisco.Views.Take
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ViewModel.Initialize();
             DataContext = ViewModel;
         }
 

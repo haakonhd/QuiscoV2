@@ -38,7 +38,7 @@ namespace Quisco.Services
         {
             if (_user == null)
             {
-                _user = await GetUserFromCacheAsync();
+                _user = await GetUserFromCacheAsync().ConfigureAwait(true);
                 if (_user == null)
                 {
                     _user = GetDefaultUserData();
@@ -50,38 +50,38 @@ namespace Quisco.Services
 
         private async void OnLoggedIn(object sender, EventArgs e)
         {
-            _user = await GetUserFromGraphApiAsync();
+            _user = await GetUserFromGraphApiAsync().ConfigureAwait(true);
             UserDataUpdated?.Invoke(this, _user);
         }
 
         private async void OnLoggedOut(object sender, EventArgs e)
         {
             _user = null;
-            await ApplicationData.Current.LocalFolder.SaveAsync<User>(_userSettingsKey, null);
+            await ApplicationData.Current.LocalFolder.SaveAsync<User>(_userSettingsKey, null).ConfigureAwait(true);
         }
 
         private async Task<UserViewModel> GetUserFromCacheAsync()
         {
-            var cacheData = await ApplicationData.Current.LocalFolder.ReadAsync<User>(_userSettingsKey);
-            return await GetUserViewModelFromData(cacheData);
+            var cacheData = await ApplicationData.Current.LocalFolder.ReadAsync<User>(_userSettingsKey).ConfigureAwait(true);
+            return await GetUserViewModelFromData(cacheData).ConfigureAwait(true);
         }
 
         private async Task<UserViewModel> GetUserFromGraphApiAsync()
         {
-            var accessToken = await IdentityService.GetAccessTokenAsync();
+            var accessToken = await IdentityService.GetAccessTokenAsync().ConfigureAwait(true);
             if (string.IsNullOrEmpty(accessToken))
             {
                 return null;
             }
 
-            var userData = await MicrosoftGraphService.GetUserInfoAsync(accessToken);
+            var userData = await MicrosoftGraphService.GetUserInfoAsync(accessToken).ConfigureAwait(true);
             if (userData != null)
             {
-                userData.Photo = await MicrosoftGraphService.GetUserPhoto(accessToken);
-                await ApplicationData.Current.LocalFolder.SaveAsync(_userSettingsKey, userData);
+                userData.Photo = await MicrosoftGraphService.GetUserPhoto(accessToken).ConfigureAwait(true);
+                await ApplicationData.Current.LocalFolder.SaveAsync(_userSettingsKey, userData).ConfigureAwait(true);
             }
 
-            return await GetUserViewModelFromData(userData);
+            return await GetUserViewModelFromData(userData).ConfigureAwait(true);
         }
 
         private async Task<UserViewModel> GetUserViewModelFromData(User userData)
@@ -93,7 +93,7 @@ namespace Quisco.Services
 
             var userPhoto = string.IsNullOrEmpty(userData.Photo)
                 ? ImageHelper.ImageFromAssetsFile("DefaultIcon.png")
-                : await ImageHelper.ImageFromStringAsync(userData.Photo);
+                : await ImageHelper.ImageFromStringAsync(userData.Photo).ConfigureAwait(true);
 
             return new UserViewModel()
             {

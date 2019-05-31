@@ -24,7 +24,7 @@ namespace Quisco.Views.Take
     /// </summary>
     public sealed partial class TakeQuiz : Page
     {
-        public TakeQuizViewModel ViewModel = new TakeQuizViewModel();
+        public TakeQuizViewModel ViewModel { get; set; }
         private QuizCompletionParams quizCompletionParams;
 
         public TakeQuiz()
@@ -34,6 +34,7 @@ namespace Quisco.Views.Take
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            ViewModel = new TakeQuizViewModel();
             quizCompletionParams = (QuizCompletionParams)e.Parameter; // get parameter
 
             ViewModel.Initialize(quizCompletionParams);

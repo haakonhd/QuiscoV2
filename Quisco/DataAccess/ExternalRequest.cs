@@ -7,11 +7,11 @@ using Quisco.Model;
 
 namespace Quisco.DataAccess
 {
-    public class ExternalRequest
+    public static class ExternalRequest
     {
-        HttpClient httpClient = new HttpClient();
+        static HttpClient httpClient = new HttpClient();
 
-        public async Task<RootObject> GetQuizzesFromExternal(OpentdbParams opentdbParams)
+        public static async Task<RootObject> GetQuizzesFromExternal(OpentdbParams opentdbParams)
         {
             string uriString = "https://opentdb.com/api.php?amount=" + opentdbParams.Amount + opentdbParams.Category + opentdbParams.Difficulty + "&type=multiple";
             Uri opentdbUri = new Uri(uriString);
@@ -20,15 +20,7 @@ namespace Quisco.DataAccess
             string json = "";
             if (result.IsSuccessStatusCode)
             json = await result.Content.ReadAsStringAsync();
-            RootObject rootObject;
-            try
-            {
-                rootObject = JsonConvert.DeserializeObject<RootObject>(json);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            RootObject rootObject = JsonConvert.DeserializeObject<RootObject>(json);
             return rootObject;
         }
     }

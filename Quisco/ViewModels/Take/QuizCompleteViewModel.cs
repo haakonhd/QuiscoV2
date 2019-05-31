@@ -24,10 +24,10 @@ namespace Quisco.ViewModels.Take
         {
 
             quizNameText = quizCompletionParams.Quiz.QuizName;
-            answerResultText = quizCompletionParams.correctAnswers + " correct answers out of " + quizCompletionParams.Quiz.QuestionList.Count.ToString();
+            answerResultText = quizCompletionParams.correctAnswers + " correct answers out of " + quizCompletionParams.Quiz.QuestionList.Count;
         }
 
-        public void GoBackButton(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        public void GoBackButton()
         {
             NavigationService.Navigate(typeof(MainPage));
         }

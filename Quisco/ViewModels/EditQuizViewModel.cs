@@ -25,16 +25,8 @@ namespace Quisco.ViewModels
         private Question question;
         private QuizParams quizParams;
         private int questionToHandle;
-        private string selectedAnswerNumber;
-        public ICommand AddQuizCommand { get; set; }
-        private QuizRequest quizzesDataAccess = new QuizRequest();
 
         private IdentityService IdentityService => Singleton<IdentityService>.Instance;
-
-        public EditQuizViewModel()
-        {
-            
-        }
 
         public void Initialize(QuizParams quizParams)
         {
@@ -73,7 +65,7 @@ namespace Quisco.ViewModels
                     
                     if (IdentityService.IsLoggedIn())
 
-                    if (await quizzesDataAccess.UpdateQuizCascadingAsync(quiz).ConfigureAwait(true))
+                    if (await QuizRequest.UpdateQuizCascadingAsync(quiz).ConfigureAwait(true))
                     {
                         NavigationService.Navigate(typeof(MainPage));
                     }
@@ -112,7 +104,7 @@ namespace Quisco.ViewModels
             set => SetProperty(ref questionNumberText, value);
         }
 
-        public ObservableCollection<Question> questionsObservableCollection = new ObservableCollection<Question>();
+        private ObservableCollection<Question> questionsObservableCollection = new ObservableCollection<Question>();
         public ObservableCollection<Question> QuestionsObservableCollection
         {
             get => questionsObservableCollection;

@@ -5,19 +5,13 @@ namespace Quisco.ViewModels.Take
 {
     public class TakeBotOrHumanViewModel
     {
-        public void Initialize()
-        {
-
-        }
-
-        public async void TakeHumanQuizButton(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        public void TakeHumanQuizButton()
         {
             NavigationService.Navigate(typeof(TakeSelectQuiz));
         }
 
-        public async void TakeRobotQuizButton(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        public void TakeRobotQuizButton()
         {
-            //TODO: change this
             NavigationService.Navigate(typeof(TakeRobotSelectParameters));
         }
     }
