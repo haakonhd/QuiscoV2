@@ -96,7 +96,7 @@ namespace Quisco.ViewModels.Take
             else  opentdbParams.Difficulty =  "&difficulty=" + SelectedDifficulty.ToLower(new CultureInfo("en-Us",false));
 
             if (SelectedAmount == 0) opentdbParams.Amount = "&amount=3";
-            opentdbParams.Amount = "&amount=" + selectedAmount;
+            else opentdbParams.Amount = "&amount=" + selectedAmount;
 
             RootObject rootObject = await ExternalRequest.GetQuizzesFromExternal(opentdbParams).ConfigureAwait(true);
             

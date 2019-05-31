@@ -10,7 +10,7 @@ using Quisco.Views.Create;
 
 namespace Quisco.ViewModels
 {
-    public class CreateQuizNameViewModel : BindableBase, INotifyPropertyChanged
+    public class CreateQuizNameViewModel : Observable
     {
         private QuizParams quizParams;
         private Quiz quiz;
@@ -29,7 +29,7 @@ namespace Quisco.ViewModels
         public string QuestionInputText
         {
             get => questionInputText;
-            set => this.SetProperty(ref questionInputText, value);
+            set => this.Set(ref questionInputText, value);
         }
 
         public void ClickedBack(object sender, RoutedEventArgs e)

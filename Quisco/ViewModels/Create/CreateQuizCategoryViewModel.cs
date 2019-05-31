@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Quisco.Helpers;
@@ -73,7 +74,11 @@ namespace Quisco.ViewModels.Create
         {
             if (SelectedItem != null)
                 quiz.QuizCategory = SelectedItem.ToString();
-
+            else
+            {
+                DisplayErrorMessageAsync("Please select a category.");
+                return;
+            }
             NavigationService.Navigate(typeof(CreateQuestion), quizParams);
         }
 
@@ -83,6 +88,12 @@ namespace Quisco.ViewModels.Create
                 quiz.QuizCategory = SelectedItem.ToString();
 
             NavigationService.Navigate(typeof(CreateQuizNamePage), quizParams);
+        }
+
+        private static async void DisplayErrorMessageAsync(string errorMessage)
+        {
+            MessageDialog dialog = new MessageDialog(errorMessage);
+            await dialog.ShowAsync();
         }
     }
 }

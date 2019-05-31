@@ -1,4 +1,5 @@
 ﻿using System.Data.SqlClient;
+using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ namespace Quisco.Api
 		public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
-		public void ConfigureServices(IServiceCollection services)
+		public static void ConfigureServices(IServiceCollection services)
 		{
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 			SqlConnectionStringBuilder connStringBuilder = new SqlConnectionStringBuilder
@@ -29,12 +30,12 @@ namespace Quisco.Api
 				UserID = "haakonhd",
 				Password = "BJe8ER3h"
 			};
-			services.AddDbContext<QuiscoContext>(options => options.UseSqlServer(connStringBuilder.ConnectionString.ToString()));
+			services.AddDbContext<QuiscoContext>(options => options.UseSqlServer(connStringBuilder.ConnectionString.ToString(CultureInfo.InvariantCulture)));
 
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		public static void Configure(IApplicationBuilder app, IHostingEnvironment env)
 		{
 			if (env.IsDevelopment())
 			{

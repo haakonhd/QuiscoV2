@@ -19,7 +19,7 @@ using Quisco.Views.Create;
 
 namespace Quisco.ViewModels.Create
 {
-    public class CreateQuestionViewModel : BindableBase, INotifyPropertyChanged
+    public class CreateQuestionViewModel : Observable
     {
         private Quiz quiz;
         private Question question;
@@ -85,49 +85,49 @@ namespace Quisco.ViewModels.Create
         public string QuizNameHeader
         {
             get => quizNameHeader;
-            set => SetProperty(ref quizNameHeader, value);
+            set => Set(ref quizNameHeader, value);
         }
 
         private string questionNumberText;
         public string QuestionNumberText
         {
             get => questionNumberText;
-            set => SetProperty(ref questionNumberText, value);
+            set => Set(ref questionNumberText, value);
         }
 
         private ObservableCollection<Question> questionsObservableCollection = new ObservableCollection<Question>();
         public ObservableCollection<Question> QuestionsObservableCollection
         {
             get => questionsObservableCollection;
-            set => SetProperty(ref questionsObservableCollection, value);
+            set => Set(ref questionsObservableCollection, value);
         }
 
         private SolidColorBrush answer1BorderBrush = new SolidColorBrush();
         public SolidColorBrush Answer1BorderBrush
         {
             get => answer1BorderBrush;
-            set => SetProperty(ref answer1BorderBrush, value);
+            set => Set(ref answer1BorderBrush, value);
         }
 
         private SolidColorBrush answer2BorderBrush = new SolidColorBrush();
         public SolidColorBrush Answer2BorderBrush
         {
             get => answer2BorderBrush;
-            set => SetProperty(ref answer2BorderBrush, value);
+            set => Set(ref answer2BorderBrush, value);
         }
 
         private SolidColorBrush answer3BorderBrush = new SolidColorBrush();
         public SolidColorBrush Answer3BorderBrush
         {
             get => answer3BorderBrush;
-            set => SetProperty(ref answer3BorderBrush, value);
+            set => Set(ref answer3BorderBrush, value);
         }
 
         private SolidColorBrush answer4BorderBrush = new SolidColorBrush();
         public SolidColorBrush Answer4BorderBrush
         {
             get => answer4BorderBrush;
-            set => SetProperty(ref answer4BorderBrush, value);
+            set => Set(ref answer4BorderBrush, value);
         }
 
         //Two way bindings:
@@ -138,7 +138,7 @@ namespace Quisco.ViewModels.Create
         public string QuestionInputText
         {
             get => questionInputText;
-            set => SetProperty(ref questionInputText, value);
+            set => Set(ref questionInputText, value);
         }
 
         private TextBoxHelper inputText1 = new TextBoxHelper();
@@ -146,28 +146,28 @@ namespace Quisco.ViewModels.Create
         public TextBoxHelper Answer1InputText
         {
             get => inputText1;
-            set => SetProperty(ref inputText1, value);
+            set => Set(ref inputText1, value);
         }
 
         private TextBoxHelper inputText2 = new TextBoxHelper();
         public TextBoxHelper Answer2InputText
         {
             get => inputText2;
-            set => SetProperty(ref inputText2, value);
+            set => Set(ref inputText2, value);
         }
 
         private TextBoxHelper inputText3 = new TextBoxHelper();
         public TextBoxHelper Answer3InputText
         {
             get => inputText3;
-            set => SetProperty(ref inputText3, value);
+            set => Set(ref inputText3, value);
         }
 
         private TextBoxHelper inputText4 = new TextBoxHelper();
         public TextBoxHelper Answer4InputText
         {
             get => inputText4;
-            set => SetProperty(ref inputText4, value);
+            set => Set(ref inputText4, value);
         }
 
         // radio buttons
@@ -176,28 +176,28 @@ namespace Quisco.ViewModels.Create
         public RadioButtonHelper RadioButton1
         {
             get => radioButton1;
-            set => SetProperty(ref radioButton1, value);
+            set => Set(ref radioButton1, value);
         }
 
         private RadioButtonHelper radioButton2 = new RadioButtonHelper();
         public RadioButtonHelper RadioButton2
         {
             get => radioButton2;
-            set => SetProperty(ref radioButton2, value);
+            set => Set(ref radioButton2, value);
         }
 
         private RadioButtonHelper radioButton3 = new RadioButtonHelper();
         public RadioButtonHelper RadioButton3
         {
             get => radioButton3;
-            set => SetProperty(ref radioButton3, value);
+            set => Set(ref radioButton3, value);
         }
 
         private RadioButtonHelper radioButton4 = new RadioButtonHelper();
         public RadioButtonHelper RadioButton4
         {
             get => radioButton4;
-            set => SetProperty(ref radioButton4, value);
+            set => Set(ref radioButton4, value);
         }
 
 
