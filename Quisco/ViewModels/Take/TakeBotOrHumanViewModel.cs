@@ -18,7 +18,7 @@ namespace Quisco.ViewModels.Take
         public async void TakeRobotQuizButton(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             //TODO: change this
-            NavigationService.Navigate(typeof(TakeSelectQuiz));
+            NavigationService.Navigate(typeof(TakeRobotSelectParameters));
         }
     }
 }

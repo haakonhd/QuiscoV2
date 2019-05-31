@@ -12,7 +12,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Quisco.Helpers;
 using Quisco.ViewModels.Take;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -22,21 +21,17 @@ namespace Quisco.Views.Take
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class TakeQuiz : Page
+    public sealed partial class TakeRobotSelectParameters : Page
     {
-        public TakeQuizViewModel ViewModel = new TakeQuizViewModel();
-        private QuizCompletionParams quizCompletionParams;
+        public TakeRobotSelectParametersViewModel ViewModel = new TakeRobotSelectParametersViewModel();
 
-        public TakeQuiz()
+        public TakeRobotSelectParameters()
         {
             this.InitializeComponent();
         }
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            quizCompletionParams = (QuizCompletionParams)e.Parameter; // get parameter
-
-            ViewModel.Initialize(quizCompletionParams);
+            ViewModel.Initialize();
             DataContext = ViewModel;
         }
     }

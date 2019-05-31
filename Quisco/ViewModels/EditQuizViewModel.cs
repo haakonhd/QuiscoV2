@@ -19,7 +19,7 @@ using Quisco.Views;
 
 namespace Quisco.ViewModels
 {
-    public class EditQuizViewModel : BindableBase
+    public class EditQuizViewModel : BindableBase, INotifyPropertyChanged
     {
         private Quiz quiz;
         private Question question;
@@ -280,7 +280,7 @@ namespace Quisco.ViewModels
             if (RadioButton2.IsChecked) question.CorrectAnswerNumber = 2;
             if (question.AnswersList.Count > 1)
                 question.AnswersList[1].AnswerText = a2;
-            else question.AnswersList.Add(new Answer(a2, question, 3, question.QuestionId));
+            else question.AnswersList.Add(new Answer(a2, question, 2, question.QuestionId));
 
             //answer3.
             string a3 = Answer3InputText.Text;
@@ -393,8 +393,6 @@ namespace Quisco.ViewModels
             //for some weird reason the listview will only update half the time I do changes, unless I do this
             QuestionsObservableCollection = new ObservableCollection<Question>(); 
             foreach (Question q in quiz.QuestionList) QuestionsObservableCollection.Add(q);
-
-            RefreshTextBoxColors();
         }
 
 
@@ -414,7 +412,6 @@ namespace Quisco.ViewModels
             Answer3BorderBrush = default(SolidColorBrush);
             Answer4BorderBrush = default(SolidColorBrush);
 
-
             if (!string.IsNullOrEmpty(Answer1InputText.Text))
                 Answer1BorderBrush = new SolidColorBrush(Colors.Red);
             if(!string.IsNullOrEmpty(Answer2InputText.Text))
@@ -423,8 +420,8 @@ namespace Quisco.ViewModels
                 Answer3BorderBrush = new SolidColorBrush(Colors.Red);
             if(!string.IsNullOrEmpty(Answer4InputText.Text))
                 Answer4BorderBrush = new SolidColorBrush(Colors.Red);
-
             int selectedRadioButton = GetSelectedAnswer();
+
             switch (selectedRadioButton)
             {
                 case 1:

@@ -119,20 +119,25 @@
     <Compile Include="Behaviors\NavigationViewHeaderBehavior.cs" />
     <Compile Include="Behaviors\NavigationViewHeaderMode.cs" />
     <Compile Include="DataAccess\AnswerRequest.cs" />
+    <Compile Include="DataAccess\ExternalRequest.cs" />
     <Compile Include="DataAccess\QuestionRequest.cs" />
     <Compile Include="DataAccess\QuizRequest.cs" />
     <Compile Include="Helpers\AuthenticationHelper.cs" />
     <Compile Include="Helpers\BindableBase.cs" />
+    <Compile Include="Helpers\CategoryHelper.cs" />
     <Compile Include="Helpers\EnumToBooleanConverter.cs" />
     <Compile Include="Helpers\HashGenerator.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\NavHelper.cs" />
     <Compile Include="Helpers\Observable.cs" />
+    <Compile Include="Helpers\OpentdbParams.cs" />
     <Compile Include="Helpers\QuizCompletionParams.cs" />
     <Compile Include="Helpers\QuizParams.cs" />
     <Compile Include="Helpers\RadioButtonHelper.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="Helpers\Restricted.cs" />
+    <Compile Include="Helpers\Result.cs" />
+    <Compile Include="Helpers\RootObject.cs" />
     <Compile Include="Helpers\SettingsStorageExtensions.cs" />
     <Compile Include="Helpers\TextBoxHelper.cs" />
     <Compile Include="Services\ActivationService.cs" />
@@ -149,8 +154,10 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="ViewModels\Take\QuizCompleteViewModel.cs" />
     <Compile Include="ViewModels\Take\TakeBotOrHumanViewModel.cs" />
     <Compile Include="ViewModels\Take\TakeQuizViewModel.cs" />
+    <Compile Include="ViewModels\Take\TakeRobotSelectParametersViewModel.cs" />
     <Compile Include="ViewModels\Take\TakeSelectQuizViewModel.cs" />
     <Compile Include="ViewModels\UserPageViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
@@ -175,11 +182,17 @@
     <Compile Include="Views\ShellPage.xaml.cs">
       <DependentUpon>ShellPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Take\QuizComplete.xaml.cs">
+      <DependentUpon>QuizComplete.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Take\TakeBotOrHuman.xaml.cs">
       <DependentUpon>TakeBotOrHuman.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Take\TakeQuiz.xaml.cs">
       <DependentUpon>TakeQuiz.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Take\TakeRobotSelectParameters.xaml.cs">
+      <DependentUpon>TakeRobotSelectParameters.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Take\TakeSelectQuiz.xaml.cs">
       <DependentUpon>TakeSelectQuiz.xaml</DependentUpon>
@@ -243,11 +256,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Take\QuizComplete.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Take\TakeBotOrHuman.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Take\TakeQuiz.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Take\TakeRobotSelectParameters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

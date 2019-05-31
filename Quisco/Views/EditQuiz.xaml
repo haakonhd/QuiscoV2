@@ -54,46 +54,46 @@
 
                     <!-- Answer 1 -->
                     <RadioButton x:Name="RadioButton1"
-                            IsChecked="{Binding Path=RadioButton1.IsChecked, Mode=TwoWay}"
-                            IsEnabled="{Binding Path=RadioButton1.IsEnabled, Mode=TwoWay}" 
+                            IsChecked="{Binding Path=RadioButton1.IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            IsEnabled="{Binding Path=RadioButton1.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                             Checked="{x:Bind ViewModel.RadioButtonChecked}" Grid.Row="0" Grid.Column="0"  Tag="Answer 1"  />
                     <TextBox x:Name="Answer1Input" 
                             IsEnabled="{Binding Path=Answer1InputText.IsEnabled,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             Text="{Binding Path=Answer1InputText.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                             Grid.Row="0" Grid.Column="1" PlaceholderText="Answer 1"  Padding="9,9,9,9" Height="45" Margin="0,0,10,0"
-                            BorderThickness="2.5"  BorderBrush="{Binding Path=Answer1BorderBrush, UpdateSourceTrigger=PropertyChanged}" TextChanged="{x:Bind ViewModel.OnAnswer1Changed}" />
+                            BorderThickness="2.5"  BorderBrush="{Binding Path=Answer1BorderBrush, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="{x:Bind ViewModel.OnAnswer1Changed}" />
 
                     <!-- Answer 2 -->
                     <RadioButton x:Name="RadioButton2"
-                            IsChecked="{Binding Path=RadioButton2.IsChecked, Mode=TwoWay}"
-                            IsEnabled="{Binding Path=RadioButton2.IsEnabled, Mode=TwoWay}"  
+                            IsChecked="{Binding Path=RadioButton2.IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            IsEnabled="{Binding Path=RadioButton2.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
                             Checked="{x:Bind ViewModel.RadioButtonChecked}" Grid.Row="0" Grid.Column="2"  Tag="Answer 2"/>
                     <TextBox x:Name="Answer2Input"
                              Text="{Binding Path=Answer2InputText.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              IsEnabled="{Binding Path=Answer2InputText.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                             BorderThickness="2.5" BorderBrush="{Binding Path=Answer2BorderBrush, UpdateSourceTrigger=PropertyChanged}" TextChanged="{x:Bind ViewModel.OnAnswer2Changed}"
+                             BorderThickness="2.5" BorderBrush="{x:Bind ViewModel.Answer2BorderBrush, Mode=OneWay}" TextChanged="{x:Bind ViewModel.OnAnswer2Changed}"
                              Grid.Row="0" Grid.Column="3" Margin="0,0,0,0" PlaceholderText="Answer 2" Padding="9,9,9,9" Height="45" />
 
                     <!-- Answer 3 -->
                     <RadioButton x:Name="RadioButton3"
-                             IsChecked="{Binding Path=RadioButton3.IsChecked, Mode=TwoWay}"
-                             IsEnabled="{Binding Path=RadioButton3.IsEnabled, Mode=TwoWay}"
+                             IsChecked="{Binding Path=RadioButton3.IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             IsEnabled="{Binding Path=RadioButton3.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              Checked="{x:Bind ViewModel.RadioButtonChecked}" Grid.Row="1" Grid.Column="0" Tag="Answer 3"/>
                     <TextBox x:Name="Answer3Input"
                              Text="{Binding Path=Answer3InputText.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              IsEnabled="{Binding Path=Answer3InputText.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,0"
-                             BorderThickness="2.5" BorderBrush="{Binding Path=Answer3BorderBrush, UpdateSourceTrigger=PropertyChanged}" TextChanged="{x:Bind ViewModel.OnAnswer3Changed}"
+                             BorderThickness="2.5" BorderBrush="{Binding Path=Answer3BorderBrush, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="{x:Bind ViewModel.OnAnswer3Changed}"
                              Grid.Row="1" Grid.Column="1" PlaceholderText="Answer 3" Padding="9,9,9,9" Height="45"/>
 
                     <!-- Answer 4 -->
                     <RadioButton x:Name="RadioButton4"
-                                 IsChecked="{Binding Path=RadioButton4.IsChecked, Mode=TwoWay}"
-                                 IsEnabled="{Binding Path=RadioButton4.IsEnabled, Mode=TwoWay}"
+                                 IsChecked="{Binding Path=RadioButton4.IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 IsEnabled="{Binding Path=RadioButton4.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  Checked="{x:Bind ViewModel.RadioButtonChecked}" Grid.Row="1" Grid.Column="2" Tag="Answer 4"/>
                     <TextBox x:Name="Answer4Input"
                              Text="{Binding Path=Answer4InputText.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              IsEnabled="{Binding Path=Answer4InputText.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             BorderThickness="2.5" BorderBrush="{Binding Path=Answer4BorderBrush, UpdateSourceTrigger=PropertyChanged}" TextChanged="{x:Bind ViewModel.OnAnswer4Changed}"
+                             BorderThickness="2.5" BorderBrush="{Binding Path=Answer4BorderBrush, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="{x:Bind ViewModel.OnAnswer4Changed}"
                              Grid.Row="1" Grid.Column="3" Margin="0,0,0,0" PlaceholderText="Answer 4" Padding="9,9,9,9" Height="45" />
                 </Grid>
 

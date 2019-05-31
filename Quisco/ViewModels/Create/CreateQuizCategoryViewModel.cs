@@ -9,7 +9,7 @@ using CreateQuizNamePage = Quisco.Views.Create.CreateQuizName;
 
 namespace Quisco.ViewModels.Create
 {
-    public class CreateQuizCategoryViewModel : BindableBase
+    public class CreateQuizCategoryViewModel : Observable
 
     {
         private QuizParams quizParams;
@@ -24,29 +24,49 @@ namespace Quisco.ViewModels.Create
                 SelectedItem = quiz.QuizCategory;
         }
 
-        public string[] QuizCategories =
-        {
-            "History",
-            "Geography",
-            "Movies",
-            "Celebrities",
-            "Music",
-            "Other"
-        };
+//        public string[] QuizCategories = CategoryHelper
 
         private Object selectedItem;
         public Object SelectedItem
         {
             get { return selectedItem; }
-            set { SetProperty(ref selectedItem, value); }
+            set { Set(ref selectedItem, value); }
         }
 
         private TextBoxHelper headerText = new TextBoxHelper();
 
+        public string[] QuizCategories =
+        {
+            "General Knowledge",
+            "Books",
+            "Film",
+            "Music",
+            "Theatres",
+            "Television",
+            "Video Games",
+            "BoardGames",
+            "Science & Nature",
+            "Computers",
+            "Math",
+            "Mythology",
+            "Sports",
+            "Geography",
+            "History",
+            "Politics",
+            "Art",
+            "Celebrities",
+            "Animals",
+            "Vehicles",
+            "Comics",
+            "Gadgets",
+            "Anime And Manga",
+            "Cartoons And Animations"
+        };
+
         public TextBoxHelper HeaderText
         {
             get { return headerText; }
-            set { SetProperty(ref headerText, value); }
+            set { Set(ref headerText, value); }
         }
 
         public void ClickedNext(object sender, RoutedEventArgs e)

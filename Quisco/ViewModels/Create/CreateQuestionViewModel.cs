@@ -271,7 +271,7 @@ namespace Quisco.ViewModels.Create
             if (RadioButton2.IsChecked) question.CorrectAnswerNumber = 2;
             if (question.AnswersList.Count > 1)
                 question.AnswersList[1].AnswerText = a2;
-            else question.AnswersList.Add(new Answer(a2, question, 3, question.QuestionId));
+            else question.AnswersList.Add(new Answer(a2, question, 2, question.QuestionId));
 
             //answer3.
             string a3 = Answer3InputText.Text;

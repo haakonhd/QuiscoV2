@@ -81,8 +81,9 @@ namespace Quisco.ViewModels.Take
 
             if (quiz != null)
             {
-                QuizParams quizParams = new QuizParams(quiz, 1);
-                NavigationService.Navigate(typeof(TakeQuiz), quizParams);
+                QuizCompletionParams quizCompletionParams = new QuizCompletionParams();
+                quizCompletionParams.Quiz = quiz;
+                NavigationService.Navigate(typeof(TakeQuiz), quizCompletionParams);
             }
         }
 

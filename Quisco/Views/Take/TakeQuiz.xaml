@@ -14,6 +14,7 @@
         Style="{StaticResource ImageStyle}"
         x:Name="ContentArea">
         <RelativePanel x:Name="MainRelativePanel">
+            <!-- Background -->
             <RelativePanel RelativePanel.AlignLeftWithPanel="True" AlignRightWithPanel="True" Margin="150,200,150,100"
                            RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True"
                            Background="LightGray"
@@ -22,12 +23,8 @@
             <RelativePanel RelativePanel.AlignLeftWithPanel="True" AlignRightWithPanel="True" Margin="150,200,150,100"
                            RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True">
 
-                <TextBlock x:Name="QuizNameTextBlock" Text="{x:Bind ViewModel.QuizNameTextBlock, Mode=OneWay}"
-                           FontFamily="{StaticResource DefaultFont}" FontWeight="Bold" FontSize="35"
-                    Foreground="White" Margin="30,30,0,0" />
-
-                <StackPanel Orientation="Vertical" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.AlignRightWithPanel="True"
-                            Margin="40">
+                <StackPanel x:Name="ControllersStackPanel" Orientation="Vertical" RelativePanel.AlignVerticalCenterWithPanel="True"
+                            RelativePanel.AlignRightWithPanel="True" Margin="40">
                     <Button Click="{x:Bind ViewModel.ShowAnswerButton}" Height="100" Width="100"  Padding="0" BorderThickness="0"
                             Visibility="{x:Bind ViewModel.ShowAnswerIsVisible, Mode=OneWay, ConverterParameter=Reverse, Converter={StaticResource Boolean}}">
                         <Grid>
@@ -36,22 +33,84 @@
                         </Grid>
                     </Button>
 
-                    <Button Click="{x:Bind ViewModel.ShowAnswerButton}" Height="100" Width="100"  Padding="0" BorderThickness="0"
-                            Visibility="{x:Bind ViewModel.ShowAnswerIsVisible, Mode=OneWay, ConverterParameter=Reverse, Converter={StaticResource Boolean}}">
+                    <Button Click="{x:Bind ViewModel.NextQuestionButton}" Height="100" Width="100"  Padding="0" BorderThickness="0"
+                            Visibility="{x:Bind ViewModel.NextQuestionIsVisible, Mode=OneWay, ConverterParameter=Reverse, Converter={StaticResource Boolean}}">
                         <Grid>
                             <Image Source="../../Assets/button_blue_bg.png" Stretch="UniformToFill"/>
                             <FontIcon Foreground="White"  FontFamily="Segoe MDL2 Assets" Glyph="&#xE111;" FontSize="40" FontWeight="ExtraBold" />
                         </Grid>
                     </Button>
+                </StackPanel>
 
-                    <Button Click="{x:Bind ViewModel.PreviousQuestionButton}" Height="100" Width="100"  Padding="0" BorderThickness="0"
-                            Visibility="{x:Bind ViewModel.PreviousQuestionIsVisible, Mode=OneWay, ConverterParameter=Reverse, Converter={StaticResource Boolean}}">
+                <TextBlock x:Name="QuizNameTextBlock" RelativePanel.AlignTopWithPanel="True" Margin="50,30,0,0"
+                    Text="{x:Bind ViewModel.QuizNameTextBlock, Mode=OneWay}" FontFamily="{StaticResource DefaultFont}" FontWeight="Bold" FontSize="35"
+                    Foreground="Black" TextWrapping="Wrap"/>
+
+                <TextBlock x:Name="QuestionText" RelativePanel.Below="QuizNameTextBlock" Margin="50,10,0,00"
+                           Text="{x:Bind ViewModel.QuestionTextBlock, Mode=OneWay}" FontWeight="Bold" FontSize="25"
+                           Foreground="Black" TextWrapping="Wrap" FontFamily="{StaticResource DefaultFont}"/>
+
+                <TextBlock x:Name="CorrectResultTextBlock"  Margin="0,0,0,30" RelativePanel.AlignHorizontalCenterWithPanel="True"
+                           Text="{x:Bind ViewModel.CorrectResultTextBlock, Mode=OneWay}" FontWeight="Bold" FontSize="35" RelativePanel.AlignBottomWithPanel="True"
+                           Foreground="Black" TextWrapping="Wrap" FontFamily="{StaticResource DefaultFont}"/>
+
+                <Grid x:Name="AnswerGrid" RelativePanel.LeftOf="ControllersStackPanel" RelativePanel.AlignLeftWithPanel="True" Padding="50"
+                      RelativePanel.Below="QuizNameTextBlock" RelativePanel.AlignBottomWithPanel="True">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Click="{x:Bind ViewModel.Answer1ButtonPressed}" Height="80" Width="300"  Padding="0" BorderThickness="0"
+                            Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,70,0"
+                            IsEnabled="{Binding Path=AnswersAreEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <Grid>
-                            <Image Source="../../Assets/button_blue_bg.png" Stretch="UniformToFill"/>
-                            <FontIcon Foreground="White"  FontFamily="Segoe MDL2 Assets" Glyph="&#xE112;" FontSize="40" FontWeight="ExtraBold" />
+                            <Image Source="{x:Bind ViewModel.Answer1ImageSource, Mode=OneWay}" Stretch="UniformToFill"/>
+                            <TextBlock
+                                Text="{x:Bind ViewModel.Answer1Text, Mode=OneWay}" FontFamily="{StaticResource DefaultFont}" FontWeight="Bold" FontSize="25"
+                                Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" TextWrapping="Wrap"/>
                         </Grid>
                     </Button>
-                </StackPanel>
+
+                    <Button Click="{x:Bind ViewModel.Answer2ButtonPressed}" Height="90" Width="300"  Padding="0" BorderThickness="0"
+                            Grid.Row="0" Grid.Column="1" IsEnabled="{Binding Path=AnswersAreEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <Grid>
+                            <Image Source="{x:Bind ViewModel.Answer2ImageSource, Mode=OneWay}" Stretch="UniformToFill"/>
+                            <TextBlock
+                                Text="{x:Bind ViewModel.Answer2Text, Mode=OneWay}" FontFamily="{StaticResource DefaultFont}" FontWeight="Bold" FontSize="25"
+                                Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" TextWrapping="Wrap"/>
+                        </Grid>
+                    </Button>
+
+                    <Button Click="{x:Bind ViewModel.Answer3ButtonPressed}" Height="90" Width="300"  Padding="0" BorderThickness="0"
+                            Visibility="{x:Bind ViewModel.Answer3ButtonVisibility, Mode=OneWay, ConverterParameter=Reverse, Converter={StaticResource Boolean}}"
+                            Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,70,0" VerticalAlignment="Top"
+                            IsEnabled="{Binding Path=AnswersAreEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <Grid>
+                            <Image Source="{x:Bind ViewModel.Answer3ImageSource, Mode=OneWay}" Stretch="UniformToFill"/>
+                            <TextBlock
+                                Text="{x:Bind ViewModel.Answer3Text, Mode=OneWay}" FontFamily="{StaticResource DefaultFont}" FontWeight="Bold" FontSize="25"
+                                Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" TextWrapping="Wrap"/>
+                        </Grid>
+                    </Button>
+                    <Button Click="{x:Bind ViewModel.Answer4ButtonPressed}" Height="90" Width="300"  Padding="0" BorderThickness="0"
+                            Visibility="{x:Bind ViewModel.Answer4ButtonVisibility, Mode=OneWay, ConverterParameter=Reverse, Converter={StaticResource Boolean}}"
+                            Grid.Row="1" Grid.Column="1" VerticalAlignment="Top"
+                            IsEnabled="{Binding Path=AnswersAreEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <Grid>
+                            <Image Source="{x:Bind ViewModel.Answer4ImageSource, Mode=OneWay}" Stretch="UniformToFill"/>
+                            <TextBlock
+                                Text="{x:Bind ViewModel.Answer4Text, Mode=OneWay}" FontFamily="{StaticResource DefaultFont}" FontWeight="Bold" FontSize="25"
+                                Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" TextWrapping="Wrap"/>
+                        </Grid>
+                    </Button>
+
+                </Grid>
 
             </RelativePanel>
             

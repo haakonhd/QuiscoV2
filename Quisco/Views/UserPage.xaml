@@ -11,7 +11,7 @@
         x:Name="ContentArea"
     >
 
-        <RelativePanel x:Name="MainRelativePanel">
+        <RelativePanel x:Name="MainRelativePanel" Padding="300,100,300,100">
             <StackPanel x:Name="ButtonsStackPanel" Orientation="Vertical" Margin="40,0,0,0" VerticalAlignment="Center" RelativePanel.AlignVerticalCenterWithPanel="True">
                 <Button Click="{x:Bind ViewModel.EditButton}" Height="60" Width="200" VerticalAlignment="Top" Padding="0" BorderThickness="0" Margin="0,0,0,40">
                     <Grid>
